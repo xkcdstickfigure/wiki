@@ -1,15 +1,25 @@
 package main
 
 import (
+	"context"
+	"log"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/jackc/pgx/v5"
 	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
+	// connect to database
+	_, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v\n", err)
+	}
+
+	// http router
 	r := chi.NewRouter()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
