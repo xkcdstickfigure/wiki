@@ -1,7 +1,5 @@
 package markup
 
-import "errors"
-
 type Article struct {
 	Meta    Meta
 	Infobox Infobox
@@ -12,18 +10,6 @@ func ParseArticle(str string) (Article, error) {
 	parts, err := splitParts(str)
 	if err != nil {
 		return Article{}, err
-	}
-
-	if len(parts["meta"]) == 0 {
-		return Article{}, errors.New("meta part is required")
-	}
-
-	if len(parts["infobox"]) == 0 {
-		return Article{}, errors.New("infobox part is required")
-	}
-
-	if len(parts["content"]) == 0 {
-		return Article{}, errors.New("content part is required")
 	}
 
 	meta, err := parseMeta(parts["meta"])
