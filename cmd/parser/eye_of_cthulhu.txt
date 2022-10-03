@@ -3,8 +3,8 @@ Image        =   eye_of_cthulhu The Eye of Cthulhu
 Category     =   boss // pre-hardmode boss
 
 === infobox ===
-Damage     =   Classic: 15   // Expert: 30   // Master: 45
-Max Life   =   Classic: 2800 // Expert: 3640 // Master: 4641
+Damage     =   [Classic]: 15   // [Expert]: 30   // [Master]: 45
+Max Life   =   [Classic]: 2800 // [Expert]: 3640 // [Master]: 4641
 Defense    =   12
 
 # Drops

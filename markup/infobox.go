@@ -11,8 +11,8 @@ type InfoboxSection struct {
 	Fields []InfoboxField
 }
 type InfoboxField struct {
-	Key   string
-	Value []string
+	Key   Text
+	Value []Text
 }
 
 func ParseInfobox(lines []string) (Infobox, error) {
@@ -37,22 +37,37 @@ func ParseInfobox(lines []string) (Infobox, error) {
 			}
 		} else {
 			// field
-			fieldSplit := strings.Split(line, " = ")
-			if len(fieldSplit) == 1 {
+			split := strings.Split(line, " = ")
+			if len(split) == 1 {
 				// key only
-				fields = append(fields, InfoboxField{
-					Key:   line,
-					Value: []string{},
-				})
-			} else if len(fieldSplit) == 2 {
-				// key = value
-				values := []string{}
-				for _, value := range strings.Split(fieldSplit[1], " // ") {
-					values = append(values, strings.TrimSpace(value))
+				keyText, err := ParseText(line)
+				if err != nil {
+					return infobox, err
 				}
 
 				fields = append(fields, InfoboxField{
-					Key:   strings.TrimSpace(fieldSplit[0]),
+					Key:   keyText,
+					Value: []Text{},
+				})
+			} else if len(split) == 2 {
+				// key = value
+				keyText, err := ParseText(strings.TrimSpace(split[0]))
+				if err != nil {
+					return infobox, err
+				}
+
+				values := []Text{}
+				for _, value := range strings.Split(split[1], " // ") {
+					valueText, err := ParseText(strings.TrimSpace(value))
+					if err != nil {
+						return infobox, err
+					}
+
+					values = append(values, valueText)
+				}
+
+				fields = append(fields, InfoboxField{
+					Key:   keyText,
 					Value: values,
 				})
 			} else {
