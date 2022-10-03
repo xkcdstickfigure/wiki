@@ -5,10 +5,12 @@ import (
 	"strings"
 )
 
-func SplitParts(str string) (map[string][]string, error) {
-	var name string
-	var content []string
-	parts := map[string][]string{}
+type Parts map[string][]string
+
+func SplitParts(str string) (Parts, error) {
+	name := ""
+	content := []string{}
+	parts := Parts{}
 
 	lines := strings.Split(str, "\n")
 	for i, line := range lines {
