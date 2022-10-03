@@ -9,7 +9,7 @@ type Article struct {
 }
 
 func ParseArticle(str string) (Article, error) {
-	parts, err := SplitParts(str)
+	parts, err := splitParts(str)
 	if err != nil {
 		return Article{}, err
 	}
@@ -26,17 +26,17 @@ func ParseArticle(str string) (Article, error) {
 		return Article{}, errors.New("content part is required")
 	}
 
-	meta, err := ParseMeta(parts["meta"])
+	meta, err := parseMeta(parts["meta"])
 	if err != nil {
 		return Article{}, err
 	}
 
-	infobox, err := ParseInfobox(parts["infobox"])
+	infobox, err := parseInfobox(parts["infobox"])
 	if err != nil {
 		return Article{}, err
 	}
 
-	content, err := ParseContent(parts["content"])
+	content, err := parseContent(parts["content"])
 	if err != nil {
 		return Article{}, err
 	}

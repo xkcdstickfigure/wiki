@@ -7,7 +7,7 @@ import (
 
 type Meta map[string]string
 
-func ParseMeta(lines []string) (Meta, error) {
+func parseMeta(lines []string) (Meta, error) {
 	meta := Meta{}
 
 	for _, line := range lines {

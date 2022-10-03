@@ -15,7 +15,7 @@ type InfoboxField struct {
 	Value []Text
 }
 
-func ParseInfobox(lines []string) (Infobox, error) {
+func parseInfobox(lines []string) (Infobox, error) {
 	infobox := Infobox{}
 	sectionName := ""
 	fields := []InfoboxField{}
@@ -40,7 +40,7 @@ func ParseInfobox(lines []string) (Infobox, error) {
 			split := strings.Split(line, " = ")
 			if len(split) == 1 {
 				// key only
-				keyText, err := ParseText(line)
+				keyText, err := parseText(line)
 				if err != nil {
 					return infobox, err
 				}
@@ -51,14 +51,14 @@ func ParseInfobox(lines []string) (Infobox, error) {
 				})
 			} else if len(split) == 2 {
 				// key = value
-				keyText, err := ParseText(strings.TrimSpace(split[0]))
+				keyText, err := parseText(strings.TrimSpace(split[0]))
 				if err != nil {
 					return infobox, err
 				}
 
 				values := []Text{}
 				for _, value := range strings.Split(split[1], " // ") {
-					valueText, err := ParseText(strings.TrimSpace(value))
+					valueText, err := parseText(strings.TrimSpace(value))
 					if err != nil {
 						return infobox, err
 					}

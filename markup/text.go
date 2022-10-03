@@ -10,7 +10,7 @@ type TextComponent struct {
 	Value []string
 }
 
-func ParseText(str string) (Text, error) {
+func parseText(str string) (Text, error) {
 	text := Text{}
 
 	componentType := "plain"

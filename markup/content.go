@@ -27,7 +27,7 @@ type ContentImage struct {
 	Text   Text
 }
 
-func ParseContent(lines []string) (Content, error) {
+func parseContent(lines []string) (Content, error) {
 	topLines, rawSections := organizeContentLines(lines, 0)
 	elements, images, err := parseContentLines(topLines)
 	if err != nil {
@@ -84,7 +84,7 @@ func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error)
 			// image
 			img := strings.TrimPrefix(line, ":img ")
 			source := strings.Split(img, " ")[0]
-			text, err := ParseText(strings.TrimPrefix(img, source))
+			text, err := parseText(strings.TrimPrefix(img, source))
 			if err != nil {
 				return elements, images, err
 			}
@@ -97,7 +97,7 @@ func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error)
 		} else if strings.HasPrefix(line, "- ") {
 
 			// list
-			text, err := ParseText(strings.TrimPrefix(line, "- "))
+			text, err := parseText(strings.TrimPrefix(line, "- "))
 			if err != nil {
 				return elements, images, err
 			}
@@ -117,7 +117,7 @@ func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error)
 		} else {
 
 			// text
-			text, err := ParseText(line)
+			text, err := parseText(line)
 			if err != nil {
 				return elements, images, err
 			}

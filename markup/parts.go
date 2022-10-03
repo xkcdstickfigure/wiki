@@ -7,7 +7,7 @@ import (
 
 type Parts map[string][]string
 
-func SplitParts(str string) (Parts, error) {
+func splitParts(str string) (Parts, error) {
 	name := ""
 	content := []string{}
 	parts := Parts{}
