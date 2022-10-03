@@ -19,13 +19,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	infobox, err := markup.ParseInfobox(parts["infobox"])
+	content, err := markup.ParseContent(parts["content"])
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	bytes, err := json.MarshalIndent(infobox, "", "	")
+	bytes, err := json.MarshalIndent(content, "", "	")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
