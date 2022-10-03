@@ -1,7 +1,6 @@
 package markup
 
 import (
-	"errors"
 	"strings"
 )
 
@@ -11,11 +10,7 @@ type Content struct {
 }
 
 func ParseContent(lines []string) (Content, error) {
-	intro, rawSections, err := parseContentSection(lines, 0)
-	if err != nil {
-		return Content{}, err
-	}
-
+	intro, rawSections := parseContentSection(lines, 0)
 	return Content{intro, rawSections}, nil
 }
 
@@ -25,7 +20,7 @@ type RawSection struct {
 	Sections []RawSection
 }
 
-func parseContentSection(lines []string, depth int) ([]string, []RawSection, error) {
+func parseContentSection(lines []string, depth int) ([]string, []RawSection) {
 	text := []string{}
 	sections := []RawSection{}
 	sectionTitle := ""
@@ -37,11 +32,7 @@ func parseContentSection(lines []string, depth int) ([]string, []RawSection, err
 		if strings.HasPrefix(line, titlePrefix) {
 			// current section (recursion!)
 			if sectionTitle != "" {
-				sText, sSections, err := parseContentSection(sectionLines, depth+1)
-				if err != nil {
-					return text, sections, err
-				}
-
+				sText, sSections := parseContentSection(sectionLines, depth+1)
 				sections = append(sections, RawSection{
 					Title:    sectionTitle,
 					Text:     sText,
@@ -52,9 +43,6 @@ func parseContentSection(lines []string, depth int) ([]string, []RawSection, err
 			// start new section
 			sectionTitle = strings.TrimSpace(strings.TrimPrefix(line, titlePrefix))
 			sectionLines = []string{}
-			if sectionTitle == "" {
-				return text, sections, errors.New("content section must have title")
-			}
 		} else {
 			// add lines
 			if sectionTitle == "" {
@@ -67,11 +55,7 @@ func parseContentSection(lines []string, depth int) ([]string, []RawSection, err
 
 	// add final section
 	if sectionTitle != "" {
-		sText, sSections, err := parseContentSection(sectionLines, depth+1)
-		if err != nil {
-			return text, sections, err
-		}
-
+		sText, sSections := parseContentSection(sectionLines, depth+1)
 		sections = append(sections, RawSection{
 			Title:    sectionTitle,
 			Text:     sText,
@@ -79,5 +63,5 @@ func parseContentSection(lines []string, depth int) ([]string, []RawSection, err
 		})
 	}
 
-	return text, sections, nil
+	return text, sections
 }
