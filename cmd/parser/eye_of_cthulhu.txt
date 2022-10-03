@@ -1,0 +1,58 @@
+=== meta ===
+Image        =   eye_of_cthulhu The Eye of Cthulhu
+Category     =   boss // pre-hardmode boss
+
+=== infobox ===
+Damage     =   Classic: 15   // Expert: 30   // Master: 45
+Max Life   =   Classic: 2800 // Expert: 3640 // Master: 4641
+Defense    =   12
+
+# Drops
+7 {gold} 50 {silver}
+{lesser_healing_potion} [Lesser Healing Potion] (5 - 15)
+{badgers_hat} [Badger's Hat] (when defeated on the same day as the [Wall of Flesh])
+{binoculars} [Binoculars]   =   2.5%
+[Eye of Cthulhu Mask]       =   14.29%
+[Eye of Cthulhu Trophy]     =   10%
+
+# Drops (Corrupt Worlds)
+{demonite_ore} Demonite Ore (30 - 90)
+{unholy_arrow} Unholy Arrow (20 - 50)
+{corrupt_seeds} Corrupt Seeds (1 - 3)
+
+# Drops (Crimson Worlds)
+{crimtane_ore} Crimtane Ore (30 - 90)
+{crimson_seeds} Crimson Seeds (1 - 3)
+
+=== content ===
+
+The Eye of Cthulhu is a [pre-Hardmode] [boss]. It is one of the first bosses a player may encounter, as it spawns automatically when a relatively early level of game advancement is achieved. It can also be summoned manually with the [Suspicious Looking Eye] at night (see #Spawn below).
+
+# Spawn
+The Eye of Cthulu can be summoned manually using a [Suspicious Looking Eye] at [night] (beginning at 7:30 PM in-game time). It also has a 1/3 chance of spawning automatically each night, if the following conditions apply:
+
+- The Eye of Cthulu has not yet been defeated in the current world
+- At least one player in the world has at least 200 maximum [health] and more than 10 [defense].
+- At least four [town NPCs|Town NPC] (including the [Travelling Merchant] and [town pets]) are present in the world.
+
+# Behaviour
+The Eye of Cthulhu has two phases, and is able to fly through blocks in both of them. During the first, it attempts to float directly above the player, while spawning 3-4 [Servants of Cthulhu|Servants of Cthulhu], which drop [Hearts|Heart] and [Stars|Star] on death.
+
+## Stage 1
+:img eye_of_cthulhu_stage_1 The Eye of Cthulhu in its first stage
+
+Upon spawning, text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here
+
+## Stage 2
+:img eye_of_cthulhu_stage_2 The Eye of Cthulhu
+
+text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
+
+# Strategies and Tips
+New players are generally advised to have some of the following:
+- 15 defense (using [Iron Armor] or [Tungsten Armor])
+- [Iron Broadsword]
+- A [bow] with at least 100 [arrows|arrow]
+
+# Defeat
+text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
