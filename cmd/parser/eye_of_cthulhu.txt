@@ -26,7 +26,7 @@ Defense    =   12
 
 === content ===
 
-The Eye of Cthulhu is a [pre-Hardmode] [boss]. It is one of the first bosses a player may encounter, as it spawns automatically when a relatively early level of game advancement is achieved. It can also be summoned manually with the [Suspicious Looking Eye] at night (see #Spawn below).
+The Eye of Cthulhu is a [pre-Hardmode] [boss]. It is one of the first bosses a player may encounter, as it spawns automatically when a relatively early level of game advancement is achieved. It can also be summoned manually with the [Suspicious Looking Eye] at night (see [#Spawn] below).
 
 This is some other text.
 
@@ -48,7 +48,7 @@ Upon spawning, text goes here text goes here text goes here text goes here text 
 ## Stage 2
 :img eye_of_cthulhu_stage_2 The Eye of Cthulhu
 
-text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
+text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2
 
 ### Stage 2a
 text [text | https://www.youtube.com/watch?v=dQw4w9WgXcQ] text
@@ -63,4 +63,4 @@ New players are generally advised to have some of the following:
 - A [bow] with at least 100 [arrows|arrow]
 
 # Defeat
-text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
+when it's defeated, stuff happens

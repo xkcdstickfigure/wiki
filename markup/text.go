@@ -16,7 +16,7 @@ func ParseText(str string) (Text, error) {
 	componentType := "plain"
 	value := ""
 
-	for _, char := range strings.Split(str, "") {
+	for _, char := range strings.Split(strings.TrimSpace(str), "") {
 		if componentType == "plain" {
 			// plain
 			if char == "{" {

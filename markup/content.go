@@ -1,67 +1,141 @@
 package markup
 
 import (
+	"errors"
 	"strings"
 )
 
 type Content struct {
-	Intro    []string
-	Sections []RawSection
+	Elements []ContentElement
+	Sections []ContentSection
+}
+
+type ContentSection struct {
+	Title    string
+	Elements []ContentElement
+	Images   []ContentImage
+	Sections []ContentSection
+}
+
+type ContentElement struct {
+	Type    string
+	Content []Text
+}
+
+type ContentImage struct {
+	Source string
+	Text   Text
 }
 
 func ParseContent(lines []string) (Content, error) {
-	intro, rawSections := parseContentSection(lines, 0)
-	return Content{intro, rawSections}, nil
-}
-
-type RawSection struct {
-	Title    string
-	Text     []string
-	Sections []RawSection
-}
-
-func parseContentSection(lines []string, depth int) ([]string, []RawSection) {
-	text := []string{}
-	sections := []RawSection{}
-	sectionTitle := ""
-	sectionLines := []string{}
-	titlePrefix := strings.Repeat("#", depth+1) + " "
-
-	// go through lines
-	for _, line := range lines {
-		if strings.HasPrefix(line, titlePrefix) {
-			// current section (recursion!)
-			if sectionTitle != "" {
-				sText, sSections := parseContentSection(sectionLines, depth+1)
-				sections = append(sections, RawSection{
-					Title:    sectionTitle,
-					Text:     sText,
-					Sections: sSections,
-				})
-			}
-
-			// start new section
-			sectionTitle = strings.TrimSpace(strings.TrimPrefix(line, titlePrefix))
-			sectionLines = []string{}
-		} else {
-			// add lines
-			if sectionTitle == "" {
-				text = append(text, line)
-			} else {
-				sectionLines = append(sectionLines, line)
-			}
-		}
+	topLines, rawSections := organizeContentLines(lines, 0)
+	elements, images, err := parseContentLines(topLines)
+	if err != nil {
+		return Content{}, err
 	}
 
-	// add final section
-	if sectionTitle != "" {
-		sText, sSections := parseContentSection(sectionLines, depth+1)
-		sections = append(sections, RawSection{
-			Title:    sectionTitle,
-			Text:     sText,
-			Sections: sSections,
+	if len(images) > 0 {
+		return Content{}, errors.New("top level content cannot contain images")
+	}
+
+	sections, err := parseContentSections(rawSections)
+	if err != nil {
+		return Content{}, err
+	}
+
+	return Content{
+		Elements: elements,
+		Sections: sections,
+	}, nil
+}
+
+func parseContentSections(rawSections []RawSection) ([]ContentSection, error) {
+	sections := []ContentSection{}
+	for _, rawSection := range rawSections {
+		elements, images, err := parseContentLines(rawSection.Lines)
+		if err != nil {
+			return sections, err
+		}
+
+		subsections, err := parseContentSections(rawSection.Sections)
+		if err != nil {
+			return sections, err
+		}
+
+		sections = append(sections, ContentSection{
+			Title:    rawSection.Title,
+			Elements: elements,
+			Images:   images,
+			Sections: subsections,
 		})
 	}
 
-	return text, sections
+	return sections, nil
+}
+
+func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error) {
+	elements := []ContentElement{}
+	element := ContentElement{}
+	images := []ContentImage{}
+
+	for _, line := range lines {
+		if strings.HasPrefix(line, ":img ") {
+
+			// image
+			img := strings.TrimPrefix(line, ":img ")
+			source := strings.Split(img, " ")[0]
+			text, err := ParseText(strings.TrimPrefix(img, source))
+			if err != nil {
+				return elements, images, err
+			}
+
+			images = append(images, ContentImage{
+				Source: source,
+				Text:   text,
+			})
+
+		} else if strings.HasPrefix(line, "- ") {
+
+			// list
+			text, err := ParseText(strings.TrimPrefix(line, "- "))
+			if err != nil {
+				return elements, images, err
+			}
+
+			if element.Type == "list" {
+				element.Content = append(element.Content, text)
+			} else {
+				if len(element.Content) > 0 {
+					elements = append(elements, element)
+				}
+				element = ContentElement{
+					Type:    "list",
+					Content: []Text{text},
+				}
+			}
+
+		} else {
+
+			// text
+			text, err := ParseText(line)
+			if err != nil {
+				return elements, images, err
+			}
+
+			if len(element.Content) > 0 {
+				elements = append(elements, element)
+			}
+			element = ContentElement{
+				Type:    "text",
+				Content: []Text{text},
+			}
+
+		}
+	}
+
+	if len(element.Content) > 0 {
+		elements = append(elements, element)
+	}
+
+	return elements, images, nil
 }
