@@ -75,7 +75,7 @@ func parseText(str string) (Text, error) {
 
 				if external {
 					text = append(text, TextComponent{
-						Type:  "external link",
+						Type:  "link external",
 						Value: data,
 					})
 				} else {
