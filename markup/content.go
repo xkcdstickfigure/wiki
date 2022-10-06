@@ -6,23 +6,23 @@ import (
 )
 
 type Content struct {
-	Elements []ContentElement
-	Sections []ContentSection
+	Elements []Element
+	Sections []Section
 }
 
-type ContentSection struct {
+type Section struct {
 	Title    string
-	Elements []ContentElement
-	Images   []ContentImage
-	Sections []ContentSection
+	Elements []Element
+	Images   []Image
+	Sections []Section
 }
 
-type ContentElement struct {
+type Element struct {
 	Type    string
 	Content []Text
 }
 
-type ContentImage struct {
+type Image struct {
 	Source string
 	Text   Text
 }
@@ -49,8 +49,8 @@ func parseContent(lines []string) (Content, error) {
 	}, nil
 }
 
-func parseContentSections(rawSections []RawSection) ([]ContentSection, error) {
-	sections := []ContentSection{}
+func parseContentSections(rawSections []RawSection) ([]Section, error) {
+	sections := []Section{}
 	for _, rawSection := range rawSections {
 		elements, images, err := parseContentLines(rawSection.Lines)
 		if err != nil {
@@ -62,7 +62,7 @@ func parseContentSections(rawSections []RawSection) ([]ContentSection, error) {
 			return sections, err
 		}
 
-		sections = append(sections, ContentSection{
+		sections = append(sections, Section{
 			Title:    rawSection.Title,
 			Elements: elements,
 			Images:   images,
@@ -73,10 +73,10 @@ func parseContentSections(rawSections []RawSection) ([]ContentSection, error) {
 	return sections, nil
 }
 
-func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error) {
-	elements := []ContentElement{}
-	element := ContentElement{}
-	images := []ContentImage{}
+func parseContentLines(lines []string) ([]Element, []Image, error) {
+	elements := []Element{}
+	element := Element{}
+	images := []Image{}
 
 	for _, line := range lines {
 		if strings.HasPrefix(line, ":img ") {
@@ -89,7 +89,7 @@ func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error)
 				return elements, images, err
 			}
 
-			images = append(images, ContentImage{
+			images = append(images, Image{
 				Source: source,
 				Text:   text,
 			})
@@ -108,7 +108,7 @@ func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error)
 				if len(element.Content) > 0 {
 					elements = append(elements, element)
 				}
-				element = ContentElement{
+				element = Element{
 					Type:    "list",
 					Content: []Text{text},
 				}
@@ -125,7 +125,7 @@ func parseContentLines(lines []string) ([]ContentElement, []ContentImage, error)
 			if len(element.Content) > 0 {
 				elements = append(elements, element)
 			}
-			element = ContentElement{
+			element = Element{
 				Type:    "text",
 				Content: []Text{text},
 			}
