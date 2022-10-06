@@ -1,13 +1,12 @@
 package render
 
-// toc = table of contents
-
 import (
-	"alles/wiki/markup"
 	"fmt"
 	"html"
 	"net/url"
 	"strings"
+
+	"alles/wiki/markup"
 )
 
 func renderToc(sections []markup.Section) string {

@@ -54,5 +54,5 @@ func renderLinkExternal(data []string) string {
 }
 
 func renderIcon(data []string, pctx PageContext) string {
-	return `<img class="icon" alt="` + html.EscapeString(data[0]) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + url.QueryEscape(pctx.Site) + `/icons/` + url.QueryEscape(data[0]) + `/icon-32.png" />`
+	return `<img class="icon" alt="` + html.EscapeString(data[0]) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + pctx.Site + `/icons/` + url.QueryEscape(data[0]) + `/icon-32.png" />`
 }

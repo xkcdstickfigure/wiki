@@ -10,16 +10,30 @@ type PageContext struct {
 }
 
 func RenderArticle(article markup.Article, pctx PageContext) (string, error) {
+	// infobox
+	infobox, err := renderInfobox(article, pctx)
+	if err != nil {
+		return "", err
+	}
 
+	// header
+	header := renderHeader(article.Meta["title"], pctx)
+
+	// elements
 	elements, err := renderElements(article.Content.Elements, pctx)
 	if err != nil {
 		return "", err
 	}
 
+	// table of contents
+	toc := renderToc(article.Content.Sections)
+
+	// sections
 	sections, err := renderSections(article.Content.Sections, 0, pctx)
 	if err != nil {
 		return "", err
 	}
 
-	return renderHeader(article.Meta["title"], pctx) + elements + renderToc(article.Content.Sections) + sections, nil
+	// return
+	return infobox + header + elements + toc + sections, nil
 }

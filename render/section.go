@@ -24,7 +24,7 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 			titleDepth = 6
 		}
 		titleElem := "h" + fmt.Sprintf("%v", titleDepth)
-		output += `<` + titleElem + ` class="title">` + html.EscapeString(section.Title) + `</` + titleElem + `>`
+		output += `<` + titleElem + ` class="section-title">` + html.EscapeString(section.Title) + `</` + titleElem + `>`
 
 		// media
 		if len(section.Images) > 0 {
@@ -37,8 +37,8 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 				}
 
 				output += `<div class="image-container">`
-				output += `<img class="image" alt="` + html.EscapeString(image.Source) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + url.QueryEscape(pctx.Site) + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
-				output += `<p>` + text + `</p>`
+				output += `<img class="image" alt="` + html.EscapeString(image.Source) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
+				output += `<p class="caption">` + text + `</p>`
 				output += `</div>`
 
 			}
