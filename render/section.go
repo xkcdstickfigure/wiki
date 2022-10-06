@@ -23,7 +23,8 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 		if titleDepth > 6 {
 			titleDepth = 6
 		}
-		output += `<h` + fmt.Sprintf("%v", titleDepth) + ` class="title">` + html.EscapeString(section.Title) + `</h1>`
+		titleElem := "h" + fmt.Sprintf("%v", titleDepth)
+		output += `<` + titleElem + ` class="title">` + html.EscapeString(section.Title) + `</` + titleElem + `>`
 
 		// media
 		if len(section.Images) > 0 {
