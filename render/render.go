@@ -10,6 +10,7 @@ type PageContext struct {
 }
 
 func RenderArticle(article markup.Article, pctx PageContext) (string, error) {
+
 	elements, err := renderElements(article.Content.Elements, pctx)
 	if err != nil {
 		return "", err
@@ -20,5 +21,5 @@ func RenderArticle(article markup.Article, pctx PageContext) (string, error) {
 		return "", err
 	}
 
-	return renderHeader(article.Meta["title"], pctx) + elements + sections, nil
+	return renderHeader(article.Meta["title"], pctx) + elements + renderToc(article.Content.Sections) + sections, nil
 }
