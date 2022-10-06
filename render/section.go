@@ -3,6 +3,8 @@ package render
 import (
 	"fmt"
 	"html"
+	"net/url"
+	"os"
 	"strings"
 
 	"alles/wiki/markup"
@@ -22,6 +24,25 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 			titleDepth = 6
 		}
 		output += `<h` + fmt.Sprintf("%v", titleDepth) + ` class="title">` + html.EscapeString(section.Title) + `</h1>`
+
+		// media
+		if len(section.Images) > 0 {
+			output += `<aside class="media">`
+			for _, image := range section.Images {
+
+				text, err := renderText(image.Text, pctx)
+				if err != nil {
+					return output, err
+				}
+
+				output += `<div class="image-container">`
+				output += `<img class="image" alt="` + html.EscapeString(image.Source) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + url.QueryEscape(pctx.Site) + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
+				output += `<p>` + text + `</p>`
+				output += `</div>`
+
+			}
+			output += `</aside>`
+		}
 
 		// elements
 		elements, err := renderElements(section.Elements, pctx)
