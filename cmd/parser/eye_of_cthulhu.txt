@@ -1,4 +1,5 @@
 === meta ===
+Title        =   Eye of Cthulhu
 Image        =   eye_of_cthulhu The Eye of Cthulhu
 Category     =   boss // pre-hardmode boss
 

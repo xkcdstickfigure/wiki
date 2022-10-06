@@ -1,0 +1,57 @@
+package render
+
+import (
+	"errors"
+	"html"
+	"net/url"
+	"os"
+
+	"alles/wiki/markup"
+)
+
+func renderText(text markup.Text, pctx PageContext) (string, error) {
+	var output string
+
+	for _, component := range text {
+		// eek, not much type safety here
+		if component.Type == "plain" {
+			output += html.EscapeString(component.Value[0])
+		} else if component.Type == "link internal" {
+			output += renderLinkInternal(component.Value)
+		} else if component.Type == "link external" {
+			output += renderLinkExternal(component.Value)
+		} else if component.Type == "icon" {
+			output += renderIcon(component.Value, pctx)
+		} else {
+			return output, errors.New("invalid text component type: " + component.Type)
+		}
+	}
+
+	return output, nil
+}
+
+func renderLinkInternal(data []string) string {
+	display := data[0]
+	page := data[1]
+	section := data[2]
+
+	pageUrl := ""
+	if page != "" {
+		pageUrl = "/" + slug(page)
+	}
+
+	sectionUrl := ""
+	if section != "" {
+		sectionUrl = "#" + slug(section)
+	}
+
+	return `<a class="link-internal" href="` + pageUrl + sectionUrl + `">` + html.EscapeString(display) + "</a>"
+}
+
+func renderLinkExternal(data []string) string {
+	return `<a class="link-external" target="_blank" href="` + data[1] + `">` + html.EscapeString(data[0]) + "</a>"
+}
+
+func renderIcon(data []string, pctx PageContext) string {
+	return `<img class="icon" alt="` + html.EscapeString(data[0]) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + url.QueryEscape(pctx.Site) + `/icons/` + url.QueryEscape(data[0]) + `/icon-32.png" />`
+}

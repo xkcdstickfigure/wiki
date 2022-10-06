@@ -1,8 +1,11 @@
 package main
 
 import (
+	"alles/wiki/markup"
+	"alles/wiki/render"
 	"bytes"
 	"context"
+	_ "embed"
 	"html/template"
 	"log"
 	"net/http"
@@ -13,6 +16,9 @@ import (
 	"github.com/jackc/pgx/v5"
 	_ "github.com/joho/godotenv/autoload"
 )
+
+//go:embed cmd/parser/eye_of_cthulhu.txt
+var source string
 
 func main() {
 	// connect to database
@@ -43,19 +49,29 @@ func main() {
 		slug := strings.ToLower(chi.URLParam(r, "slug"))
 		subdomain := getSubdomain(r)
 
+		// parse article
+		article, err := markup.ParseArticle(source)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		// render article html
+		articleHtml, err := render.RenderArticle(article, render.PageContext{
+			Site:     subdomain,
+			PageSlug: slug,
+		})
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		// render page
 		html := new(bytes.Buffer)
-		err := tmpl.ExecuteTemplate(html, "article.html", struct {
-			Site    string
-			Domain  string
-			Slug    string
-			Title   string
+		err = tmpl.ExecuteTemplate(html, "article.html", struct {
 			Content template.HTML
 		}{
-			Site:    subdomain,
-			Domain:  os.Getenv("DOMAIN"),
-			Slug:    slug,
-			Title:   "Eye of Cthulhu",
-			Content: "The Eye of Cthulu is a <a href='/pre-hardmode'>pre-Hardmode</a> <a href='/boss'>boss</a>. It is one of the first bosses the player may encounter, as it spawns automatically when a relatively early level of game advancement is achieved.",
+			Content: template.HTML(articleHtml),
 		})
 
 		if err != nil {
