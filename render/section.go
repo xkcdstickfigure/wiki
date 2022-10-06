@@ -16,7 +16,7 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 	for _, section := range sections {
 		// start
 		slug := strings.ReplaceAll(strings.ToLower(section.Title), " ", "_")
-		output += `<section id="` + html.EscapeString(slug) + `" class="section section-depth-` + fmt.Sprintf("%v", depth+1) + `">`
+		output += `<section id="` + html.EscapeString(slug) + `" class="section">`
 
 		// title
 		titleDepth := depth + 2
