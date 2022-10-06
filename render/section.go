@@ -17,7 +17,7 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 		output += `<div id="` + html.EscapeString(slug) + `" class="section section-depth-` + fmt.Sprintf("%v", depth+1) + `">`
 
 		// title
-		titleDepth := depth + 1
+		titleDepth := depth + 2
 		if titleDepth > 6 {
 			titleDepth = 6
 		}
