@@ -30,9 +30,9 @@ func renderElements(elements []markup.Element, pctx PageContext) (string, error)
 					return output, err
 				}
 
-				output += "<li>" + text + "</li>"
+				output += `<li>` + text + `</li>`
 			}
-			output += "</ul>"
+			output += `</ul>`
 
 		} else {
 
