@@ -5,6 +5,7 @@ import (
 	"html"
 	"net/url"
 	"os"
+	"strings"
 
 	"alles/wiki/markup"
 )
@@ -37,12 +38,12 @@ func renderLinkInternal(data []string) string {
 
 	pageUrl := ""
 	if page != "" {
-		pageUrl = "/" + slug(page)
+		pageUrl = "/" + url.QueryEscape(strings.ReplaceAll(strings.ToLower(page), " ", "_"))
 	}
 
 	sectionUrl := ""
 	if section != "" {
-		sectionUrl = "#" + slug(section)
+		sectionUrl = "#" + url.QueryEscape(strings.ReplaceAll(strings.ToLower(section), " ", "_"))
 	}
 
 	return `<a class="link-internal" href="` + pageUrl + sectionUrl + `">` + html.EscapeString(display) + "</a>"

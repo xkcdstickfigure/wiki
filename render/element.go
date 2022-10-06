@@ -1,8 +1,9 @@
 package render
 
 import (
-	"alles/wiki/markup"
 	"errors"
+
+	"alles/wiki/markup"
 )
 
 func renderElements(elements []markup.Element, pctx PageContext) (string, error) {

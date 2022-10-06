@@ -10,10 +10,15 @@ type PageContext struct {
 }
 
 func RenderArticle(article markup.Article, pctx PageContext) (string, error) {
-	element, err := renderElements(article.Content.Elements, pctx)
+	elements, err := renderElements(article.Content.Elements, pctx)
 	if err != nil {
 		return "", err
 	}
 
-	return renderHeader(article.Meta["title"], pctx) + element, nil
+	sections, err := renderSections(article.Content.Sections, 0, pctx)
+	if err != nil {
+		return "", err
+	}
+
+	return renderHeader(article.Meta["title"], pctx) + elements + sections, nil
 }
