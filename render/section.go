@@ -47,14 +47,14 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 		// elements
 		elements, err := renderElements(section.Elements, pctx)
 		if err != nil {
-			return "", err
+			return output, err
 		}
 		output += elements
 
 		// sections
 		sections, err := renderSections(section.Sections, depth+1, pctx)
 		if err != nil {
-			return "", err
+			return output, err
 		}
 		output += sections
 
