@@ -5,6 +5,7 @@ import (
 )
 
 type PageContext struct {
+	Title         string
 	Site          string
 	Domain        string
 	PageSlug      string
@@ -19,7 +20,7 @@ func RenderArticle(article markup.Article, pctx PageContext) (string, error) {
 	}
 
 	// header
-	header := renderHeader(article.Meta["title"], pctx)
+	header := renderHeader(pctx)
 
 	// elements
 	elements, err := renderElements(article.Content.Elements, pctx)

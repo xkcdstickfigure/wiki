@@ -1,7 +1,6 @@
 === meta ===
-Title        =   Eye of Cthulhu
-Image        =   eye_of_cthulhu_battle The Eye of Cthulhu while on fire. As you can see, it can move through blocks, and [NPCs] will attack it.
-Category     =   boss // pre-hardmode boss
+Image      =   eye_of_cthulhu_battle The Eye of Cthulhu while on fire. As you can see, it can move through blocks, and [NPCs] will attack it.
+Category   =   boss // pre-hardmode boss
 
 === infobox ===
 Damage     =   [Classic]: 15   // [Expert]: 30   // [Master]: 45

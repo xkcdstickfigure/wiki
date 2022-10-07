@@ -58,6 +58,7 @@ func main() {
 
 		// render article html
 		articleHtml, err := render.RenderArticle(article, render.PageContext{
+			Title:         "Eye of Cthulhu",
 			Site:          subdomain,
 			Domain:        os.Getenv("DOMAIN"),
 			PageSlug:      slug,

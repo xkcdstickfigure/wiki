@@ -14,7 +14,7 @@ func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
 	output := `<aside class="infobox">`
 
 	if article.Image.Source != "" {
-		caption := html.EscapeString(article.Meta["title"])
+		caption := html.EscapeString(pctx.Title)
 		if len(article.Image.Text) > 0 {
 			var err error
 			caption, err = renderText(article.Image.Text, pctx)
