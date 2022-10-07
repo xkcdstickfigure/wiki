@@ -18,12 +18,12 @@ func renderElements(elements []markup.Element, pctx PageContext) (string, error)
 				return output, err
 			}
 
-			output += `<div class="element"><p>` + text + `</p></div>`
+			output += `<div class="element element-text"><p>` + text + `</p></div>`
 
 		} else if element.Type == "list" {
 
 			// list
-			output += `<ul class="element">`
+			output += `<ul class="element element-list">`
 			for _, item := range element.Content {
 				text, err := renderText(item, pctx)
 				if err != nil {

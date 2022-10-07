@@ -36,8 +36,12 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 				}
 
 				output += `<div class="image-container">`
-				output += `<img class="image" alt="` + html.EscapeString(image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
-				output += `<p class="caption">` + text + `</p>`
+				output += `<div class="image">`
+				output += `<img alt="` + html.EscapeString(image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
+				output += `</div>`
+				if text != "" {
+					output += `<p class="caption">` + text + `</p>`
+				}
 				output += `</div>`
 
 			}

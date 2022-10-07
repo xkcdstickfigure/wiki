@@ -42,12 +42,12 @@ The Eye of Cthulu can be summoned manually using a [Suspicious Looking Eye] at [
 The Eye of Cthulhu has two phases, and is able to fly through blocks in both of them. During the first, it attempts to float directly above the player, while spawning 3-4 [Servants of Cthulhu|Servants of Cthulhu], which drop [Hearts|Heart] and [Stars|Star] on death.
 
 ## Stage 1
-:img eye_of_cthulhu_stage_1 The Eye of Cthulhu in its first stage
+:img eye_of_cthulhu_stage_1 Stage 1
 
 Upon spawning, text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here text goes here
 
 ## Stage 2
-:img eye_of_cthulhu_stage_2 The Eye of Cthulhu
+:img eye_of_cthulhu_stage_2 Stage 2
 
 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2 text2
 

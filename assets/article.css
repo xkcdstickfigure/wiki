@@ -16,10 +16,11 @@
 /* infobox */
 
 .infobox {
-    border: solid 1px;
+    border: solid 1px #888888;
     width: 320px;
     padding: 12px;
     float: right;
+    margin-left: 16px;
 }
 
 .infobox .image {
@@ -45,6 +46,7 @@
 
 .infobox-field {
     font-size: 14px;
+    line-height: 1.5rem;
 }
 
 .infobox-field:not(:nth-child(1)) {
@@ -67,8 +69,125 @@
     flex-shrink: 0;
 }
 
+/* header */
+
+.header .title {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.header .subtitle {
+    font-size: 12px;
+    color: #444444;
+}
+
+/* table of contents */
+.toc {
+    margin-top: 16px;
+    border: solid 1px #888888;
+    padding: 12px;
+    display: table;
+    line-height: 1.5rem;
+}
+
+.toc h2 {
+    text-align: center;
+    font-weight: 600;
+}
+
+.toc ul {
+    list-style: none;
+    padding: 0;
+}
+
+.toc ul ul {
+    padding-left: 16px;
+}
+
+.toc a {
+    text-decoration: none;
+}
+
+.toc .number {
+    color: #222222;
+}
+
+.toc .name {
+    color: #1d4ed8;
+}
+
+.toc a:hover .name {
+    text-decoration: underline;
+}
+
 /* sections */
 
-.section {
+.section:not(:nth-child(1)) {
     clear: both;
+    margin-top: 32px;
+}
+
+.section .section {
+    padding-left: 32px;
+}
+
+.section-title {
+    font-weight: 600;
+}
+
+h2.section-title {
+    font-size: 32px;
+}
+
+h3.section-title {
+    font-size: 24px;
+}
+
+h4.section-title,
+h5.section-title,
+h6.section-title {
+    font-size: 16px;
+}
+
+/* media */
+
+.media {
+    float: right;
+    margin-left: 16px;
+}
+
+.media .image-container {
+    border: solid 1px #888888;
+    padding: 8px;
+    max-width: 256px;
+}
+
+.media .image {
+    display: flex;
+    justify-content: center;
+}
+
+.media .image img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 192px;
+}
+
+.media .caption {
+    margin-top: 8px;
+    font-size: 12px;
+    text-align: center;
+    color: #444444;
+}
+
+/* content */
+
+.element {
+    margin-top: 12px;
+    line-height: 1.5rem;
+}
+
+.element-list {
+    padding-left: 32px;
 }
