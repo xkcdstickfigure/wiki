@@ -18,6 +18,7 @@
 .infobox {
     border: solid 1px #888888;
     width: 320px;
+    max-width: 100%;
     padding: 12px;
     float: right;
     margin-left: 16px;
