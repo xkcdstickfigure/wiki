@@ -72,9 +72,15 @@ func main() {
 		// render page
 		html := new(bytes.Buffer)
 		err = tmpl.ExecuteTemplate(html, "article.html", struct {
-			Content template.HTML
+			Content       template.HTML
+			Site          string
+			SiteName      string
+			StorageOrigin string
 		}{
-			Content: template.HTML(articleHtml),
+			Content:       template.HTML(articleHtml),
+			Site:          "terraria",
+			SiteName:      "Terraria",
+			StorageOrigin: os.Getenv("STORAGE_ORIGIN"),
 		})
 
 		if err != nil {

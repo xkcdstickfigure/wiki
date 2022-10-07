@@ -46,8 +46,8 @@ func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
 					return output, err
 				}
 
-				output += `<div class="key"><p>` + keyText + `</p></div>`
-				output += `<div class="value">`
+				output += `<div><p>` + keyText + `</p></div>`
+				output += `<div>`
 
 				for _, value := range field.Value {
 					valueText, err := renderText(value, pctx)
