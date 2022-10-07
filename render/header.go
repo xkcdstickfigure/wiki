@@ -5,7 +5,7 @@ import (
 )
 
 func renderHeader(pctx PageContext) string {
-	output := `<div class="header">`
+	output := `<div class="article-header">`
 	output += `<h1 class="title">`
 	output += html.EscapeString(pctx.Title)
 	output += `</h1><h2 class="subtitle">`
