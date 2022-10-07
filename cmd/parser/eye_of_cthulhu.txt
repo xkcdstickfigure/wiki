@@ -17,13 +17,13 @@ Defense    =   12
 [Eye of Cthulhu Trophy]     =   10%
 
 # Drops (Corrupt Worlds)
-{demonite_ore} Demonite Ore (30 - 90)
-{unholy_arrow} Unholy Arrow (20 - 50)
-{corrupt_seeds} Corrupt Seeds (1 - 3)
+{demonite_ore} [Demonite Ore] (30 - 90)
+{unholy_arrow} [Unholy Arrow] (20 - 50)
+{corrupt_seeds} [Corrupt Seeds] (1 - 3)
 
 # Drops (Crimson Worlds)
-{crimtane_ore} Crimtane Ore (30 - 90)
-{crimson_seeds} Crimson Seeds (1 - 3)
+{crimtane_ore} [Crimtane Ore] (30 - 90)
+{crimson_seeds} [Crimson Seeds] (1 - 3)
 
 === content ===
 
