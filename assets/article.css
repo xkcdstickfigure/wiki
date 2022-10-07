@@ -108,6 +108,7 @@
 
 .toc .name {
     color: #1d4ed8;
+    margin-left: 4px;
 }
 
 .toc a:hover .name {
