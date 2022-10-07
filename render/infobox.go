@@ -23,8 +23,10 @@ func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
 			}
 		}
 
-		output += `<div class="image-container">`
-		output += `<img class="image" alt="` + html.EscapeString(article.Image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(article.Image.Source) + `/image.png" />`
+		output += `<div>`
+		output += `<div class="image">`
+		output += `<img alt="` + html.EscapeString(article.Image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(article.Image.Source) + `/image.png" />`
+		output += `</div>`
 		output += `<p class="caption">` + caption + `</p>`
 		output += `</div>`
 	}
