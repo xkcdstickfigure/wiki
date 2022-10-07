@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html"
 	"net/url"
-	"os"
 	"strings"
 
 	"alles/wiki/markup"
@@ -37,7 +36,7 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 				}
 
 				output += `<div class="image-container">`
-				output += `<img class="image" alt="` + html.EscapeString(image.Source) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
+				output += `<img class="image" alt="` + html.EscapeString(image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
 				output += `<p class="caption">` + text + `</p>`
 				output += `</div>`
 

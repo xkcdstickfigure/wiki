@@ -5,8 +5,10 @@ import (
 )
 
 type PageContext struct {
-	Site     string
-	PageSlug string
+	Site          string
+	Domain        string
+	PageSlug      string
+	StorageOrigin string
 }
 
 func RenderArticle(article markup.Article, pctx PageContext) (string, error) {

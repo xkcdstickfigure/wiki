@@ -4,7 +4,6 @@ import (
 	"alles/wiki/markup"
 	"html"
 	"net/url"
-	"os"
 )
 
 func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
@@ -25,7 +24,7 @@ func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
 		}
 
 		output += `<div class="image-container">`
-		output += `<img class="image" alt="` + html.EscapeString(article.Image.Source) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(article.Image.Source) + `/image.png" />`
+		output += `<img class="image" alt="` + html.EscapeString(article.Image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(article.Image.Source) + `/image.png" />`
 		output += `<p class="caption">` + caption + `</p>`
 		output += `</div>`
 	}

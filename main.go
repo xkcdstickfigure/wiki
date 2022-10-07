@@ -58,8 +58,10 @@ func main() {
 
 		// render article html
 		articleHtml, err := render.RenderArticle(article, render.PageContext{
-			Site:     subdomain,
-			PageSlug: slug,
+			Site:          subdomain,
+			Domain:        os.Getenv("DOMAIN"),
+			PageSlug:      slug,
+			StorageOrigin: os.Getenv("STORAGE_ORIGIN"),
 		})
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)

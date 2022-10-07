@@ -4,7 +4,6 @@ import (
 	"errors"
 	"html"
 	"net/url"
-	"os"
 	"strings"
 
 	"alles/wiki/markup"
@@ -54,5 +53,5 @@ func renderLinkExternal(data []string) string {
 }
 
 func renderIcon(data []string, pctx PageContext) string {
-	return `<img class="icon" alt="` + html.EscapeString(data[0]) + `" src="` + os.Getenv("STORAGE_ORIGIN") + `/sites/` + pctx.Site + `/icons/` + url.QueryEscape(data[0]) + `/icon.png" />`
+	return `<img class="icon" alt="` + html.EscapeString(data[0]) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/icons/` + url.QueryEscape(data[0]) + `/icon.png" />`
 }
