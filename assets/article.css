@@ -59,14 +59,7 @@
 
 .infobox-field-double {
     display: flex;
-}
-
-.infobox-field-double .key {
-    flex-grow: 1;
-}
-
-.infobox-field-double .value {
-    flex-shrink: 0;
+    justify-content: space-between;
 }
 
 /* header */
