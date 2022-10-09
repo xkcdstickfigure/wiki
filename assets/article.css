@@ -130,7 +130,8 @@
 
 .section:not(:first-child) {
     clear: both;
-    margin-top: 32px;
+    padding-top: 96px;
+    margin-top: -32px;
 }
 
 .section .section {
