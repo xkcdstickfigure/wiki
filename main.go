@@ -1,31 +1,31 @@
 package main
 
 import (
-	"alles/wiki/markup"
-	"alles/wiki/render"
 	"bytes"
 	"context"
-	_ "embed"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 
+	"alles/wiki/markup"
+	"alles/wiki/render"
+	"alles/wiki/store"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 	_ "github.com/joho/godotenv/autoload"
 )
 
-//go:embed cmd/parser/eye_of_cthulhu.txt
-var source string
-
 func main() {
 	// connect to database
-	_, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v\n", err)
 	}
+	db := store.Store{Conn: conn}
 
 	// html templates
 	tmpl, err := template.ParseGlob("templates/*.html")
@@ -49,22 +49,40 @@ func main() {
 		slug := strings.ToLower(chi.URLParam(r, "slug"))
 		subdomain := getSubdomain(r)
 
-		// parse article
-		article, err := markup.ParseArticle(source)
+		// get site
+		site, err := db.SiteGetByName(r.Context(), subdomain)
 		if err != nil {
+			fmt.Println(err)
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		// get article
+		article, err := db.ArticleGetBySlug(r.Context(), site.Id, slug)
+		if err != nil {
+			fmt.Println(err)
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		// parse article
+		articleData, err := markup.ParseArticle(article.Source)
+		if err != nil {
+			fmt.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
 		// render article html
-		articleHtml, err := render.RenderArticle(article, render.PageContext{
-			Title:         "Eye of Cthulhu",
-			Site:          subdomain,
+		articleHtml, err := render.RenderArticle(articleData, render.PageContext{
+			Title:         article.Title,
+			Site:          site.Name,
 			Domain:        os.Getenv("DOMAIN"),
-			PageSlug:      slug,
+			PageSlug:      article.Slug,
 			StorageOrigin: os.Getenv("STORAGE_ORIGIN"),
 		})
 		if err != nil {
+			fmt.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -78,12 +96,13 @@ func main() {
 			StorageOrigin string
 		}{
 			Content:       template.HTML(articleHtml),
-			Site:          "terraria",
-			SiteName:      "Terraria",
+			Site:          site.Name,
+			SiteName:      site.DisplayName,
 			StorageOrigin: os.Getenv("STORAGE_ORIGIN"),
 		})
 
 		if err != nil {
+			fmt.Println(err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
