@@ -20,7 +20,7 @@ func parseLink(link string) (bool, []string, error) {
 	}
 
 	if strings.Contains(target, "/") {
-		// external url
+		// external link
 		return true, []string{display, target}, nil
 	} else {
 		// internal link
