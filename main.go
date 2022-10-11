@@ -4,19 +4,18 @@ import (
 	"context"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 
+	"alles/wiki/env"
 	"alles/wiki/site"
 	"alles/wiki/store"
 
 	"github.com/jackc/pgx/v5"
-	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
 	// connect to database
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	conn, err := pgx.Connect(context.Background(), env.DatabaseUrl)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v\n", err)
 	}
@@ -27,11 +26,10 @@ func main() {
 
 	// router
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		domain := os.Getenv("DOMAIN")
-		if r.Host == domain {
+		if r.Host == env.Domain {
 			// domain
 			w.Write([]byte("glaffle"))
-		} else if strings.HasSuffix(r.Host, "."+domain) {
+		} else if strings.HasSuffix(r.Host, "."+env.Domain) {
 			// subdomain
 			siteRouter.ServeHTTP(w, r)
 		}

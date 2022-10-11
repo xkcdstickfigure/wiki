@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"html/template"
 	"net/http"
-	"os"
 	"strings"
 
+	"alles/wiki/env"
 	"alles/wiki/markup"
 	"alles/wiki/render"
 
@@ -42,9 +42,9 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 	articleHtml, err := render.RenderArticle(articleData, render.PageContext{
 		Title:         article.Title,
 		Site:          site.Name,
-		Domain:        os.Getenv("DOMAIN"),
+		Domain:        env.Domain,
 		PageSlug:      article.Slug,
-		StorageOrigin: os.Getenv("STORAGE_ORIGIN"),
+		StorageOrigin: env.StorageOrigin,
 	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -62,7 +62,7 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 		Content:       template.HTML(articleHtml),
 		Site:          site.Name,
 		SiteName:      site.DisplayName,
-		StorageOrigin: os.Getenv("STORAGE_ORIGIN"),
+		StorageOrigin: env.StorageOrigin,
 	})
 
 	if err != nil {

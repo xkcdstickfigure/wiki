@@ -4,9 +4,9 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 
+	"alles/wiki/env"
 	"alles/wiki/store"
 
 	"github.com/go-chi/chi/v5"
@@ -36,7 +36,7 @@ func NewRouter(db store.Store) chi.Router {
 }
 
 func getSubdomain(r *http.Request) string {
-	domain := os.Getenv("DOMAIN")
+	domain := env.Domain
 	if strings.HasSuffix(r.Host, "."+domain) {
 		return strings.TrimSuffix(r.Host, "."+domain)
 	} else {
