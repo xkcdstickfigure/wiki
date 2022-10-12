@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"alles/wiki/env"
+	"alles/wiki/hub"
 	"alles/wiki/site"
 	"alles/wiki/store"
 
@@ -21,14 +22,14 @@ func main() {
 	}
 	db := store.Store{Conn: conn}
 
-	// site
+	// router
+	hubRouter := hub.NewRouter(db)
 	siteRouter := site.NewRouter(db)
 
-	// router
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Host == env.Domain {
 			// domain
-			w.Write([]byte("glaffle"))
+			hubRouter.ServeHTTP(w, r)
 		} else if strings.HasSuffix(r.Host, "."+env.Domain) {
 			// subdomain
 			siteRouter.ServeHTTP(w, r)

@@ -6,6 +6,11 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-var Domain string = os.Getenv("DOMAIN")
-var DatabaseUrl string = os.Getenv("DATABASE_URL")
-var StorageOrigin string = os.Getenv("STORAGE_ORIGIN")
+var Domain = os.Getenv("DOMAIN")
+var Origin = os.Getenv("ORIGIN")
+var StorageOrigin = os.Getenv("STORAGE_ORIGIN")
+
+var DatabaseUrl = os.Getenv("DATABASE_URL")
+
+var DiscordClientId = os.Getenv("DISCORD_CLIENT_ID")
+var DiscordClientSecret = os.Getenv("DISCORD_CLIENT_SECRET")
