@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"alles/wiki/discord"
+	"alles/wiki/store"
 )
 
 // join
@@ -17,6 +18,24 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 
 	// get discord information
 	profile, err := discord.GetProfile(code)
+	if err != nil {
+		http.Redirect(w, r, "/discord/error", http.StatusTemporaryRedirect)
+		return
+	}
+
+	// create discord user
+	_, err = h.db.DiscordUserCreate(r.Context(), store.DiscordUser{
+		Id:            profile.User.Id,
+		Username:      profile.User.Username,
+		Discriminator: profile.User.Discriminator,
+		Avatar:        profile.User.Avatar,
+		MfaEnabled:    profile.User.MfaEnabled,
+		Locale:        profile.User.Locale,
+		Email:         profile.User.Email,
+		EmailVerified: profile.User.EmailVerified,
+		AccessToken:   profile.Token.AccessToken,
+		RefreshToken:  profile.Token.RefreshToken,
+	})
 	if err != nil {
 		http.Redirect(w, r, "/discord/error", http.StatusTemporaryRedirect)
 		return
