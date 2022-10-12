@@ -83,6 +83,8 @@ func GetProfile(code string) (Profile, error) {
 	resp, err = http.DefaultClient.Do(req)
 	if err != nil {
 		return Profile{}, err
+	} else if resp.StatusCode != 200 {
+		return Profile{}, errors.New("user request failed")
 	}
 
 	// parse user response
@@ -102,6 +104,8 @@ func GetProfile(code string) (Profile, error) {
 	resp, err = http.DefaultClient.Do(req)
 	if err != nil {
 		return Profile{}, err
+	} else if resp.StatusCode != 200 {
+		return Profile{}, errors.New("guilds request failed")
 	}
 
 	// parse guilds response
