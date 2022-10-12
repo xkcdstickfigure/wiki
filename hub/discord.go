@@ -24,7 +24,7 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// create discord user
-	_, err = h.db.DiscordUserCreate(r.Context(), store.DiscordUser{
+	discordUser, err := h.db.DiscordUserCreate(r.Context(), store.DiscordUser{
 		Id:            profile.User.Id,
 		Username:      profile.User.Username,
 		Discriminator: profile.User.Discriminator,
@@ -39,6 +39,20 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/discord/error", http.StatusTemporaryRedirect)
 		return
+	}
+
+	// create guilds
+	for _, guild := range profile.Guilds {
+		err := h.db.DiscordGuildCreate(r.Context(), store.DiscordGuild{
+			Id:   guild.Id,
+			Name: guild.Name,
+			Icon: guild.Icon,
+		}, discordUser.Id)
+
+		if err != nil {
+			http.Redirect(w, r, "/discord/error", http.StatusTemporaryRedirect)
+			return
+		}
 	}
 
 	// join guild
