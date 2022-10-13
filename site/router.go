@@ -36,9 +36,9 @@ func NewRouter(db store.Store) chi.Router {
 }
 
 func getSubdomain(r *http.Request) string {
-	domain := env.Domain
-	if strings.HasSuffix(r.Host, "."+domain) {
-		return strings.TrimSuffix(r.Host, "."+domain)
+	hostname := strings.Split(r.Host, ":")[0]
+	if strings.HasSuffix(hostname, "."+env.Domain) {
+		return strings.TrimSuffix(hostname, "."+env.Domain)
 	} else {
 		return ""
 	}

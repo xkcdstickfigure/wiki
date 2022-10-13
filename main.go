@@ -27,10 +27,11 @@ func main() {
 	siteRouter := site.NewRouter(db)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Host == env.Domain {
+		hostname := strings.Split(r.Host, ":")[0]
+		if hostname == env.Domain {
 			// domain
 			hubRouter.ServeHTTP(w, r)
-		} else if strings.HasSuffix(r.Host, "."+env.Domain) {
+		} else if strings.HasSuffix(hostname, "."+env.Domain) {
 			// subdomain
 			siteRouter.ServeHTTP(w, r)
 		}
