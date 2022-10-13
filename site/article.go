@@ -2,6 +2,7 @@ package site
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strings"
@@ -9,6 +10,7 @@ import (
 	"alles/wiki/env"
 	"alles/wiki/markup"
 	"alles/wiki/render"
+	"alles/wiki/sessionAuth"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -70,5 +72,14 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// session
+	session, err := sessionAuth.UseSession(h.db, w, r)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	fmt.Println(session.Token)
+
+	// send page
 	w.Write(html.Bytes())
 }

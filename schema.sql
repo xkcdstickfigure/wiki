@@ -14,6 +14,15 @@ create table article (
     unique(site_id, slug)
 );
 
+create table session (
+    id           uuid        primary key,
+    token        text        unique,
+    address      text,
+    user_agent   text,
+    discord_id   text        references discord_user,
+    created_at   timestamp
+);
+
 create table discord_user (
     id               text        primary key,
     username         text,
