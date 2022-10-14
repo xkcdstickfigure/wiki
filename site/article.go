@@ -56,12 +56,14 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 	// render page
 	html := new(bytes.Buffer)
 	err = h.templates.ExecuteTemplate(html, "article.html", struct {
+		Title         string
 		Content       template.HTML
 		Site          string
 		SiteName      string
 		Origin        string
 		StorageOrigin string
 	}{
+		Title:         article.Title,
 		Content:       template.HTML(articleHtml),
 		Site:          site.Name,
 		SiteName:      site.DisplayName,
