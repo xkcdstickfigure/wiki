@@ -11,12 +11,12 @@ import (
 	"alles/wiki/site"
 	"alles/wiki/store"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
 	// connect to database
-	conn, err := pgx.Connect(context.Background(), env.DatabaseUrl)
+	conn, err := pgxpool.New(context.Background(), env.DatabaseUrl)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v\n", err)
 	}
