@@ -7,12 +7,6 @@ import (
 	"alles/wiki/store"
 )
 
-// join
-func (h handlers) discordJoin(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, discord.GenerateUrl(), http.StatusTemporaryRedirect)
-}
-
-// callback
 func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 

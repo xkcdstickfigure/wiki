@@ -12,7 +12,7 @@ func NewRouter(db store.Store) chi.Router {
 	h := handlers{db}
 
 	// discord
-	r.Get("/discord", h.discordJoin)
+	r.Get("/discord", h.discordAuth)
 	r.Get("/discord/callback", h.discordCallback)
 
 	return r
