@@ -59,11 +59,13 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 		Content       template.HTML
 		Site          string
 		SiteName      string
+		Origin        string
 		StorageOrigin string
 	}{
 		Content:       template.HTML(articleHtml),
 		Site:          site.Name,
 		SiteName:      site.DisplayName,
+		Origin:        env.Origin,
 		StorageOrigin: env.StorageOrigin,
 	})
 
