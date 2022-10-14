@@ -57,3 +57,10 @@ create table discord_state (
     site         text,
     created_at   timestamptz
 );
+
+create table article_view (
+    id           uuid          primary key,
+    session_id   uuid          references session on delete cascade,
+    article_id   uuid          references article on delete cascade,
+    date         timestamptz
+);
