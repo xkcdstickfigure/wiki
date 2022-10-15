@@ -14,6 +14,17 @@ create table article (
     unique(site_id, slug)
 );
 
+create table account (
+    id               uuid          primary key,
+    google_id        text          unique,
+    discord_id       text          references discord_user,
+    name             text,
+    email            text,
+    email_verified   boolean,
+    avatar           text,
+    created_at       timestamptz
+);
+
 create table discord_user (
     id               text          primary key,
     username         text,
@@ -46,6 +57,7 @@ create table session (
     token        text          unique,
     address      text,
     user_agent   text,
+    account_id   uuid          references account,
     discord_id   text          references discord_user,
     created_at   timestamptz
 );
@@ -71,15 +83,4 @@ create table article_view (
     session_id   uuid          references session on delete cascade,
     article_id   uuid          references article on delete cascade,
     date         timestamptz
-);
-
-create table account (
-    id               uuid          primary key,
-    google_id        text          unique,
-    discord_id       text          references discord_user,
-    name             text,
-    email            text,
-    email_verified   boolean,
-    avatar           text,
-    created_at       timestamptz
 );

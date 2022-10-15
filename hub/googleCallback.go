@@ -1,7 +1,6 @@
 package hub
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -31,7 +30,6 @@ func (h handlers) googleCallback(w http.ResponseWriter, r *http.Request) {
 	// get profile
 	profile, err := google.GetProfile(code)
 	if err != nil {
-		fmt.Println(err)
 		w.WriteHeader(400)
 		return
 	}
@@ -45,12 +43,16 @@ func (h handlers) googleCallback(w http.ResponseWriter, r *http.Request) {
 		Avatar:        profile.Picture,
 	})
 	if err != nil {
-		fmt.Println(err)
 		w.WriteHeader(400)
 		return
 	}
 
-	fmt.Println(account.Id)
+	// set account for session
+	err = h.db.SessionSetAccount(r.Context(), session.Id, account.Id)
+	if err != nil {
+		w.WriteHeader(400)
+		return
+	}
 
 	// redirect
 	http.Redirect(w, r, state.Redirect, http.StatusTemporaryRedirect)

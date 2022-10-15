@@ -36,6 +36,11 @@ func (s Store) SessionCreate(ctx context.Context, data Session) (Session, error)
 	return session, err
 }
 
+func (s Store) SessionSetAccount(ctx context.Context, id string, accountId string) error {
+	_, err := s.Conn.Exec(ctx, "update session set account_id=$2 where id=$1", id, accountId)
+	return err
+}
+
 func (s Store) SessionSetDiscord(ctx context.Context, id string, discordId string) error {
 	_, err := s.Conn.Exec(ctx, "update session set discord_id=$2 where id=$1", id, discordId)
 	return err
