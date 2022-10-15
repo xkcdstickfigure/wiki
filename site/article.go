@@ -55,7 +55,7 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 
 	// render page
 	html := new(bytes.Buffer)
-	err = h.templates.ExecuteTemplate(html, "article.html", struct {
+	h.templates.ExecuteTemplate(html, "article.html", struct {
 		Site          string
 		SiteName      string
 		Origin        string
@@ -70,11 +70,6 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 		Title:         article.Title,
 		Content:       template.HTML(articleHtml),
 	})
-
-	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
 
 	// get session
 	session, err := sessionAuth.UseSession(h.db, w, r)
