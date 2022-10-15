@@ -26,7 +26,7 @@ func (s Store) AccountCreate(ctx context.Context, data Account) (Account, error)
 		"insert into account "+
 			"(id, google_id, name, email, email_verified, avatar, created_at) "+
 			"values ($1, $2, $3, $4, $5, $6, $7) "+
-			"on conflict (id) do update set name=$3, email=$4, email_verified=$5, avatar=$6"+
+			"on conflict (google_id) do update set name=$3, email=$4, email_verified=$5, avatar=$6"+
 			"returning id, google_id, discord_id, name, email, email_verified, avatar, created_at",
 		uuid.New(), data.GoogleId, data.Name, data.Email, data.EmailVerified, data.Avatar, time.Now()).
 		Scan(&account.Id, &account.GoogleId, &account.DiscordId, &account.Name, &account.Email, &account.EmailVerified, &account.Avatar, &account.CreatedAt)
