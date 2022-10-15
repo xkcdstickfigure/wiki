@@ -29,7 +29,7 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 	// get article
 	article, err := h.db.ArticleGetBySlug(r.Context(), site.Id, slug)
 	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
+		h.sendMissingPage(w, r, site)
 		return
 	}
 
@@ -56,19 +56,19 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 	// render page
 	html := new(bytes.Buffer)
 	err = h.templates.ExecuteTemplate(html, "article.html", struct {
-		Title         string
-		Content       template.HTML
 		Site          string
 		SiteName      string
 		Origin        string
 		StorageOrigin string
+		Title         string
+		Content       template.HTML
 	}{
-		Title:         article.Title,
-		Content:       template.HTML(articleHtml),
 		Site:          site.Name,
 		SiteName:      site.DisplayName,
 		Origin:        env.Origin,
 		StorageOrigin: env.StorageOrigin,
+		Title:         article.Title,
+		Content:       template.HTML(articleHtml),
 	})
 
 	if err != nil {

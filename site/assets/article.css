@@ -73,18 +73,6 @@
     justify-content: space-between;
 }
 
-/* header */
-
-.article-header .title {
-    font-size: 40px;
-    font-weight: 600;
-}
-
-.article-header .subtitle {
-    font-size: 12px;
-    color: #444444;
-}
-
 /* table of contents */
 
 .toc {
