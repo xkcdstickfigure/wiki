@@ -32,3 +32,13 @@ func (s Store) AccountCreate(ctx context.Context, data Account) (Account, error)
 		Scan(&account.Id, &account.GoogleId, &account.DiscordId, &account.Name, &account.Email, &account.EmailVerified, &account.Avatar, &account.CreatedAt)
 	return account, err
 }
+
+func (s Store) AccountSetDiscord(ctx context.Context, id string, discordId string) error {
+	_, err := s.Conn.Exec(ctx, "update account set discord_id=$2 where id=$1", id, discordId)
+	if err != nil {
+		return err
+	}
+
+	_, err = s.Conn.Exec(ctx, "update session set discord_id=$2 where account_id=$1", id, discordId)
+	return err
+}

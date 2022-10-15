@@ -54,6 +54,17 @@ func (h handlers) googleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// sync discord account
+	if account.DiscordId.String == "" {
+		if session.DiscordId.String != "" {
+			// transfer discord id for session to account
+			h.db.AccountSetDiscord(r.Context(), account.Id, session.DiscordId.String)
+		}
+	} else if session.DiscordId.String == "" {
+		// transfer discord id for account to session
+		h.db.SessionSetDiscord(r.Context(), session.Id, account.DiscordId.String)
+	}
+
 	// redirect
 	http.Redirect(w, r, state.Redirect, http.StatusTemporaryRedirect)
 }

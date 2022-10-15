@@ -80,11 +80,20 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// set discord user for session
-	err = h.db.SessionSetDiscord(r.Context(), session.Id, discordUser.Id)
-	if err != nil {
-		http.Redirect(w, r, "/discord/error", http.StatusTemporaryRedirect)
-		return
+	if session.AccountId.String != "" {
+		// set discord for account and associated sessions
+		err = h.db.AccountSetDiscord(r.Context(), session.AccountId.String, discordUser.Id)
+		if err != nil {
+			http.Redirect(w, r, "/discord/error", http.StatusTemporaryRedirect)
+			return
+		}
+	} else {
+		// set discord for session
+		err = h.db.SessionSetDiscord(r.Context(), session.Id, discordUser.Id)
+		if err != nil {
+			http.Redirect(w, r, "/discord/error", http.StatusTemporaryRedirect)
+			return
+		}
 	}
 
 	// redirect
