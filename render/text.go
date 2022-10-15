@@ -45,13 +45,13 @@ func renderLinkInternal(data []string) string {
 		sectionUrl = "#" + url.QueryEscape(strings.ReplaceAll(strings.ToLower(section), " ", "_"))
 	}
 
-	return `<a class="link-internal" href="` + pageUrl + sectionUrl + `">` + html.EscapeString(display) + "</a>"
+	return `<a class="text-blue-700 hover:underline" href="` + pageUrl + sectionUrl + `">` + html.EscapeString(display) + "</a>"
 }
 
 func renderLinkExternal(data []string) string {
-	return `<a class="link-external" target="_blank" href="` + data[1] + `">` + html.EscapeString(data[0]) + "</a>"
+	return `<a class="text-blue-700 hover:underline" target="_blank" href="` + data[1] + `">` + html.EscapeString(data[0]) + "</a>"
 }
 
 func renderIcon(data []string, pctx PageContext) string {
-	return `<img class="text-icon" alt="` + html.EscapeString(data[0]) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/icons/` + url.QueryEscape(data[0]) + `/icon.png" />`
+	return `<img class="inline h-4" alt="` + html.EscapeString(data[0]) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/icons/` + url.QueryEscape(data[0]) + `/icon.png" />`
 }

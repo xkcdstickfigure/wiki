@@ -38,5 +38,5 @@ func RenderArticle(article markup.Article, pctx PageContext) (string, error) {
 	}
 
 	// return
-	return `<section class="section">` + infobox + header + elements + toc + `</section>` + sections, nil
+	return `<section>` + infobox + header + elements + toc + `</section>` + sections, nil
 }

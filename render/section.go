@@ -15,7 +15,11 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 	for _, section := range sections {
 		// start
 		slug := strings.ReplaceAll(strings.ToLower(section.Title), " ", "_")
-		output += `<section id="` + html.EscapeString(slug) + `" class="section">`
+		output += `<section id="` + html.EscapeString(slug) + `" class="clear-both mt-12`
+		if depth > 0 {
+			output += ` pl-8`
+		}
+		output += `">`
 
 		// title
 		titleDepth := depth + 2
@@ -23,11 +27,21 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 			titleDepth = 6
 		}
 		titleElem := "h" + fmt.Sprintf("%v", titleDepth)
-		output += `<` + titleElem + ` class="section-title">` + html.EscapeString(section.Title) + `</` + titleElem + `>`
+
+		var titleSize string
+		if titleDepth == 2 {
+			titleSize = "text-2xl"
+		} else if titleDepth == 3 {
+			titleSize = "text-xl"
+		} else {
+			titleSize = "text-lg"
+		}
+
+		output += `<` + titleElem + ` class="font-semibold ` + titleSize + `">` + html.EscapeString(section.Title) + `</` + titleElem + `>`
 
 		// media
 		if len(section.Images) > 0 {
-			output += `<aside class="media">`
+			output += `<aside class="md:float-right md:ml-4 space-y-6">`
 			for _, image := range section.Images {
 
 				text, err := renderText(image.Text, pctx)
@@ -35,12 +49,12 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 					return output, err
 				}
 
-				output += `<div class="image-container">`
-				output += `<div class="image">`
+				output += `<div class="p-2 max-w-xs table md:ml-auto bg-gray-100 border-gray-200">`
+				output += `<div class="flex justifiy-center">`
 				output += `<img alt="` + html.EscapeString(image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(image.Source) + `/image.png" />`
 				output += `</div>`
 				if text != "" {
-					output += `<p class="caption">` + text + `</p>`
+					output += `<p class="mt-2 text-sm text-center text-gray-800">` + text + `</p>`
 				}
 				output += `</div>`
 

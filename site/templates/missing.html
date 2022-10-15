@@ -5,30 +5,14 @@
     <title>Page Not Found - {{.SiteName}} Glaffle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="{{.StorageOrigin}}/sites/{{.Site}}/icon.png" />
-    <link rel="stylesheet" href="/assets/site/site.css" />
+    <link rel="stylesheet" href="/assets/tw/output.css" />
 </head>
 
 <body>
-    <header class="site-header">
-        <div class="inner">
-            <a href="/">
-                <img class="icon" src="{{.StorageOrigin}}/sites/{{.Site}}/icon.png" />
-                <p class="title">{{.SiteName}} Glaffle</p>
-            </a>
+    {{template "header.html" .}}
 
-            <a target="_blank" href="{{.Origin}}/discord?site={{.Site}}" class="discord">
-                Join Discord
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </a>
-        </div>
-    </header>
-
-    <main>
-        <h1 class="title">Page Not Found</h1>
+    <main class="max-w-5xl mx-auto pt-28 pb-16 px-16">
+        <h1 class="text-4xl font-semibold">Page Not Found</h1>
     </main>
 </body>
 

@@ -11,7 +11,7 @@ func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
 		return "", nil
 	}
 
-	output := `<aside class="infobox">`
+	output := `<aside class="md:float-right w-80 ml-auto md:ml-4 mr-auto md:mr-0 mb-12 md:mb-0 p-3 max-w-full bg-gray-100 border border-200 space-y-4">`
 
 	if article.Image.Source != "" {
 		caption := html.EscapeString(pctx.Title)
@@ -24,31 +24,31 @@ func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
 		}
 
 		output += `<div>`
-		output += `<div class="image">`
-		output += `<img alt="` + html.EscapeString(article.Image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(article.Image.Source) + `/image.png" />`
+		output += `<div class="flex justify-center">`
+		output += `<img alt="` + html.EscapeString(article.Image.Source) + `" src="` + pctx.StorageOrigin + `/sites/` + pctx.Site + `/images/` + url.QueryEscape(article.Image.Source) + `/image.png" class="w-auto max-h-48" />`
 		output += `</div>`
-		output += `<p class="caption">` + caption + `</p>`
+		output += `<p class="mt-2 text-xs text-center text-gray-800">` + caption + `</p>`
 		output += `</div>`
 	}
 
 	for _, section := range article.Infobox {
-		output += `<section class="infobox-section">`
+		output += `<section class="space-y-2">`
 
 		if section.Name != "" {
-			output += `<h2 class="infobox-section-title">` + html.EscapeString(section.Name) + `</h2>`
+			output += `<h2 class="bg-gray-200 py-0.5 px-2 text-center font-semibold">` + html.EscapeString(section.Name) + `</h2>`
 		}
 
 		for _, field := range section.Fields {
 			if len(field.Value) > 0 {
-				// key = value
-				output += `<div class="infobox-field infobox-field-double">`
+				// double (key = value)
+				output += `<div class="text-base flex justify-between">`
 
 				keyText, err := renderText(field.Key, pctx)
 				if err != nil {
 					return output, err
 				}
 
-				output += `<div><p>` + keyText + `</p></div>`
+				output += `<p>` + keyText + `</p>`
 				output += `<div>`
 
 				for _, value := range field.Value {
@@ -62,13 +62,13 @@ func renderInfobox(article markup.Article, pctx PageContext) (string, error) {
 				output += `</div>`
 				output += `</div>`
 			} else {
-				// key only
+				// single (key only)
 				keyText, err := renderText(field.Key, pctx)
 				if err != nil {
 					return output, err
 				}
 
-				output += `<div class="infobox-field infobox-field-single"><p>` + keyText + `</p></div>`
+				output += `<p class="text-center">` + keyText + `</p>`
 			}
 		}
 

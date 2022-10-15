@@ -1,0 +1,20 @@
+<header class="fixed w-full bg-gray-100 border-t-4 border-teal-700"
+    style="box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05), 0 2px 8px hsla(0, 0%, 0%, 0.05);">
+    <div class="max-w-6xl mx-auto px-8 flex justify-between items-center">
+        <a href="/" class="py-2 flex items-center overflow-hidden">
+            <img class="w-10 h-10 rounded-md mr-2" src="{{.StorageOrigin}}/sites/{{.Site}}/icon.png" />
+            <p class="text-base md:text-2xl whitespace-pre overflow-hidden text-ellipsis">{{.SiteName}} Glaffle</p>
+        </a>
+
+        <a target="_blank" href="{{.Origin}}/discord?site={{.Site}}"
+            class="text-sm md:text-base text-white py-2 px-4 rounded-full font-semibold flex items-center flex-shrink-0 ml-4"
+            style="background: #5865f2;">
+            Join Discord
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 ml-1">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </div>
+</header>
