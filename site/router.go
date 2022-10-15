@@ -27,7 +27,7 @@ func NewRouter(db store.Store) chi.Router {
 	}
 
 	// assets
-	r.Handle("/assets/*", http.StripPrefix("/assets/", http.FileServer(http.Dir("site/assets"))))
+	r.Handle("/assets/*", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 
 	// article
 	r.Get("/{slug}", h.article)
