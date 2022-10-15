@@ -17,7 +17,7 @@ create table article (
 create table account (
     id               uuid          primary key,
     google_id        text          unique,
-    discord_id       text          references discord_user,
+    discord_id       text          references discord_user on delete set null,
     name             text,
     email            text,
     email_verified   boolean,
@@ -57,8 +57,8 @@ create table session (
     token        text          unique,
     address      text,
     user_agent   text,
-    account_id   uuid          references account,
-    discord_id   text          references discord_user,
+    account_id   uuid          references account on delete set null,
+    discord_id   text          references discord_user on delete set null,
     created_at   timestamptz
 );
 
