@@ -1,7 +1,6 @@
 package site
 
 import (
-	"bytes"
 	"net/http"
 
 	"alles/wiki/env"
@@ -9,8 +8,8 @@ import (
 )
 
 func (h handlers) sendMissingPage(w http.ResponseWriter, r *http.Request, site store.Site) {
-	html := new(bytes.Buffer)
-	h.templates.ExecuteTemplate(html, "missing.html", struct {
+	w.WriteHeader(http.StatusNotFound)
+	h.templates.ExecuteTemplate(w, "missing.html", struct {
 		Site          string
 		SiteName      string
 		Origin        string
@@ -21,7 +20,4 @@ func (h handlers) sendMissingPage(w http.ResponseWriter, r *http.Request, site s
 		Origin:        env.Origin,
 		StorageOrigin: env.StorageOrigin,
 	})
-
-	w.WriteHeader(http.StatusNotFound)
-	w.Write(html.Bytes())
 }
