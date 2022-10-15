@@ -58,6 +58,14 @@ create table discord_state (
     created_at   timestamptz
 );
 
+create table auth_state (
+    id           uuid          primary key,
+    session_id   uuid          references session on delete cascade,
+    token        text          unique,
+    redirect     text,
+    created_at   timestamptz
+);
+
 create table article_view (
     id           uuid          primary key,
     session_id   uuid          references session on delete cascade,

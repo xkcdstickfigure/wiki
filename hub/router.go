@@ -15,6 +15,10 @@ func NewRouter(db store.Store) chi.Router {
 	r.Get("/discord", h.discordAuth)
 	r.Get("/discord/callback", h.discordCallback)
 
+	// google
+	r.Get("/auth", h.googleAuth)
+	r.Get("/auth/callback", h.googleCallback)
+
 	return r
 }
 
