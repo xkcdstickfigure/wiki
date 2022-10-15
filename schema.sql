@@ -72,3 +72,14 @@ create table article_view (
     article_id   uuid          references article on delete cascade,
     date         timestamptz
 );
+
+create table account (
+    id               uuid          primary key,
+    google_id        text          unique,
+    discord_id       text          references discord_user,
+    name             text,
+    email            text,
+    email_verified   boolean,
+    avatar           text,
+    created_at       timestamptz
+);

@@ -7,6 +7,7 @@ import (
 
 	"alles/wiki/google"
 	"alles/wiki/sessionAuth"
+	"alles/wiki/store"
 )
 
 func (h handlers) googleCallback(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +36,21 @@ func (h handlers) googleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(profile.Email)
+	// create account
+	account, err := h.db.AccountCreate(r.Context(), store.Account{
+		GoogleId:      profile.Id,
+		Name:          profile.Name,
+		Email:         profile.Email,
+		EmailVerified: profile.EmailVerified,
+		Avatar:        profile.Picture,
+	})
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(400)
+		return
+	}
+
+	fmt.Println(account.Id)
 
 	// redirect
 	http.Redirect(w, r, state.Redirect, http.StatusTemporaryRedirect)
