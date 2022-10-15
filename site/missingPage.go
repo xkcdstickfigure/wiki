@@ -10,7 +10,7 @@ import (
 
 func (h handlers) sendMissingPage(w http.ResponseWriter, r *http.Request, site store.Site) {
 	html := new(bytes.Buffer)
-	err := h.templates.ExecuteTemplate(html, "missing.html", struct {
+	h.templates.ExecuteTemplate(html, "missing.html", struct {
 		Site          string
 		SiteName      string
 		Origin        string
@@ -23,7 +23,5 @@ func (h handlers) sendMissingPage(w http.ResponseWriter, r *http.Request, site s
 	})
 
 	w.WriteHeader(http.StatusNotFound)
-	if err == nil {
-		w.Write(html.Bytes())
-	}
+	w.Write(html.Bytes())
 }
