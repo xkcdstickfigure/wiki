@@ -41,7 +41,7 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 
 		// media
 		if len(section.Images) > 0 {
-			output += `<aside class="md:float-right md:ml-4 space-y-6">`
+			output += `<aside class="md:float-right mt-4 md:mt-0 md:ml-4 space-y-4">`
 			for _, image := range section.Images {
 
 				text, err := renderText(image.Text, pctx)
