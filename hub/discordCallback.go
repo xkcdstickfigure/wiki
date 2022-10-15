@@ -22,7 +22,7 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 
 	// get state
 	state, err := h.db.DiscordStateUse(r.Context(), token)
-	if err != nil || state.SessionId != session.Id || time.Since(state.CreatedAt).Seconds() > 180 {
+	if err != nil || state.SessionId != session.Id || time.Since(state.CreatedAt).Seconds() > 300 {
 		w.WriteHeader(400)
 		return
 	}
