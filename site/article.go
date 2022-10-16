@@ -30,13 +30,11 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		h.templates.ExecuteTemplate(w, "missing.html", struct {
-			Site          string
-			SiteName      string
+			Site          store.Site
 			Origin        string
 			StorageOrigin string
 		}{
-			Site:          site.Name,
-			SiteName:      site.DisplayName,
+			Site:          site,
 			Origin:        env.Origin,
 			StorageOrigin: env.StorageOrigin,
 		})
@@ -82,15 +80,13 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 
 	// render page
 	h.templates.ExecuteTemplate(w, "article.html", struct {
-		Site          string
-		SiteName      string
+		Site          store.Site
 		Origin        string
 		StorageOrigin string
 		Title         string
 		Content       template.HTML
 	}{
-		Site:          site.Name,
-		SiteName:      site.DisplayName,
+		Site:          site,
 		Origin:        env.Origin,
 		StorageOrigin: env.StorageOrigin,
 		Title:         article.Title,

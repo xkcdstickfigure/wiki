@@ -1,4 +1,5 @@
 {
     "css.lint.unknownAtRules": "ignore",
-    "css.lint.unknownProperties": "ignore"
+    "css.lint.unknownProperties": "ignore",
+    "html.format.enable": false
 }
