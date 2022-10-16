@@ -27,13 +27,6 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// get site
-	site, err := h.db.SiteGetByName(r.Context(), state.Site)
-	if err != nil {
-		w.WriteHeader(400)
-		return
-	}
-
 	// get discord information
 	profile, err := discord.GetProfile(code)
 	if err != nil {
@@ -72,13 +65,6 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// join guild
-	err = discord.JoinGuild(site.DiscordGuild, profile.User.Id, profile.Token.AccessToken)
-	if err != nil {
-		w.WriteHeader(400)
-		return
-	}
-
 	if session.AccountId.String != "" {
 		// set discord for account and associated sessions
 		err = h.db.AccountSetDiscord(r.Context(), session.AccountId.String, discordUser.Id)
@@ -95,6 +81,26 @@ func (h handlers) discordCallback(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// redirect
-	http.Redirect(w, r, "https://discord.com/channels/"+site.DiscordGuild, http.StatusTemporaryRedirect)
+	if state.Action == "guild" {
+		// get site
+		site, err := h.db.SiteGetByName(r.Context(), state.Value)
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
+
+		// join guild
+		err = discord.JoinGuild(site.DiscordGuild, profile.User.Id, profile.Token.AccessToken)
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
+
+		// redirect
+		http.Redirect(w, r, "https://discord.com/channels/"+site.DiscordGuild, http.StatusTemporaryRedirect)
+	} else if state.Action == "redirect" {
+		http.Redirect(w, r, state.Value, http.StatusTemporaryRedirect)
+	} else {
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+	}
 }

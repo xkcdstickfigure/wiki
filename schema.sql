@@ -66,7 +66,8 @@ create table discord_state (
     id           uuid          primary key,
     session_id   uuid          references session on delete cascade,
     token        text          unique,
-    site         text,
+    action       text,
+    value        text,
     created_at   timestamptz
 );
 
