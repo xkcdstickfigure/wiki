@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"alles/wiki/randstr"
+	"alles/wiki/random"
 
 	"github.com/google/uuid"
 )
@@ -21,7 +21,7 @@ func (s Store) GiteaTokenCreate(ctx context.Context, accountId string) (GiteaTok
 	err := s.Conn.QueryRow(ctx, "insert into gitea_token (id, account_id, token, created_at) "+
 		"values ($1, $2, $3, $4) "+
 		"returning id, account_id, token, created_at",
-		uuid.New(), accountId, randstr.Generate(32), time.Now()).
+		uuid.New(), accountId, random.String(32), time.Now()).
 		Scan(&token.Id, &token.AccountId, &token.Token, &token.CreatedAt)
 	return token, err
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"alles/wiki/randstr"
+	"alles/wiki/random"
 
 	"github.com/google/uuid"
 )
@@ -23,7 +23,7 @@ func (s Store) DiscordStateCreate(ctx context.Context, data DiscordState) (Disco
 	err := s.Conn.QueryRow(ctx, "insert into discord_state (id, session_id, token, action, value, created_at) "+
 		"values ($1, $2, $3, $4, $5, $6) "+
 		"returning id, session_id, token, action, value, created_at",
-		uuid.New(), data.SessionId, randstr.Generate(32), data.Action, data.Value, time.Now()).
+		uuid.New(), data.SessionId, random.String(32), data.Action, data.Value, time.Now()).
 		Scan(&state.Id, &state.SessionId, &state.Token, &state.Action, &state.Value, &state.CreatedAt)
 	return state, err
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"alles/wiki/randstr"
+	"alles/wiki/random"
 
 	"github.com/google/uuid"
 )
@@ -21,7 +21,7 @@ func (s Store) GiteaCodeCreate(ctx context.Context, accountId string) (GiteaCode
 	err := s.Conn.QueryRow(ctx, "insert into gitea_code (id, account_id, code, created_at) "+
 		"values ($1, $2, $3, $4) "+
 		"returning id, account_id, code, created_at",
-		uuid.New(), accountId, randstr.Generate(32), time.Now()).
+		uuid.New(), accountId, random.String(32), time.Now()).
 		Scan(&code.Id, &code.AccountId, &code.Code, &code.CreatedAt)
 	return code, err
 }

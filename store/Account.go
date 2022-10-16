@@ -5,11 +5,14 @@ import (
 	"database/sql"
 	"time"
 
+	"alles/wiki/random"
+
 	"github.com/google/uuid"
 )
 
 type Account struct {
 	Id            string
+	Number        int
 	GoogleId      string
 	DiscordId     sql.NullString
 	Name          string
@@ -24,19 +27,19 @@ func (s Store) AccountCreate(ctx context.Context, data Account) (Account, error)
 	err := s.Conn.QueryRow(
 		ctx,
 		"insert into account "+
-			"(id, google_id, name, email, email_verified, avatar, created_at) "+
-			"values ($1, $2, $3, $4, $5, $6, $7) "+
-			"on conflict (google_id) do update set name=$3, email=$4, email_verified=$5, avatar=$6"+
-			"returning id, google_id, discord_id, name, email, email_verified, avatar, created_at",
-		uuid.New(), data.GoogleId, data.Name, data.Email, data.EmailVerified, data.Avatar, time.Now()).
-		Scan(&account.Id, &account.GoogleId, &account.DiscordId, &account.Name, &account.Email, &account.EmailVerified, &account.Avatar, &account.CreatedAt)
+			"(id, number, google_id, name, email, email_verified, avatar, created_at) "+
+			"values ($1, $2, $3, $4, $5, $6, $7, $8) "+
+			"on conflict (google_id) do update set name=$4, email=$5, email_verified=$6, avatar=$7"+
+			"returning id, number, google_id, discord_id, name, email, email_verified, avatar, created_at",
+		uuid.New(), random.Number(10), data.GoogleId, data.Name, data.Email, data.EmailVerified, data.Avatar, time.Now()).
+		Scan(&account.Id, &account.Number, &account.GoogleId, &account.DiscordId, &account.Name, &account.Email, &account.EmailVerified, &account.Avatar, &account.CreatedAt)
 	return account, err
 }
 
 func (s Store) AccountGet(ctx context.Context, id string) (Account, error) {
 	var account Account
-	err := s.Conn.QueryRow(ctx, "select id, google_id, discord_id, name, email, email_verified, avatar, created_at from account where id=$1", id).
-		Scan(&account.Id, &account.GoogleId, &account.DiscordId, &account.Name, &account.Email, &account.EmailVerified, &account.Avatar, &account.CreatedAt)
+	err := s.Conn.QueryRow(ctx, "select id, number, google_id, discord_id, name, email, email_verified, avatar, created_at from account where id=$1", id).
+		Scan(&account.Id, &account.Number, &account.GoogleId, &account.DiscordId, &account.Name, &account.Email, &account.EmailVerified, &account.Avatar, &account.CreatedAt)
 	return account, err
 }
 

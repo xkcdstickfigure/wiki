@@ -16,6 +16,7 @@ create table article (
 
 create table account (
     id               uuid          primary key,
+    number           bigint        unique,
     google_id        text          unique,
     discord_id       text          references discord_user on delete set null,
     name             text,

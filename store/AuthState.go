@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"alles/wiki/randstr"
+	"alles/wiki/random"
 
 	"github.com/google/uuid"
 )
@@ -22,7 +22,7 @@ func (s Store) AuthStateCreate(ctx context.Context, data AuthState) (AuthState, 
 	err := s.Conn.QueryRow(ctx, "insert into auth_state (id, session_id, token, redirect, created_at) "+
 		"values ($1, $2, $3, $4, $5) "+
 		"returning id, session_id, token, redirect, created_at",
-		uuid.New(), data.SessionId, randstr.Generate(32), data.Redirect, time.Now()).
+		uuid.New(), data.SessionId, random.String(32), data.Redirect, time.Now()).
 		Scan(&state.Id, &state.SessionId, &state.Token, &state.Redirect, &state.CreatedAt)
 	return state, err
 }

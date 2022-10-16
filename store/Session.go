@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 
-	"alles/wiki/randstr"
+	"alles/wiki/random"
 
 	"github.com/google/uuid"
 )
@@ -32,7 +32,7 @@ func (s Store) SessionCreate(ctx context.Context, data Session) (Session, error)
 	err := s.Conn.QueryRow(ctx, "insert into session (id, token, address, user_agent, created_at) "+
 		"values ($1, $2, $3, $4, $5) "+
 		"returning id, token, address, user_agent, created_at",
-		uuid.New(), randstr.Generate(32), data.Address, data.UserAgent, time.Now()).
+		uuid.New(), random.String(32), data.Address, data.UserAgent, time.Now()).
 		Scan(&session.Id, &session.Token, &session.Address, &session.UserAgent, &session.CreatedAt)
 	return session, err
 }
