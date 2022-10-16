@@ -1,9 +1,9 @@
 package render
 
 import (
-	"fmt"
 	"html"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"alles/wiki/markup"
@@ -26,7 +26,7 @@ func renderSections(sections []markup.Section, depth int, pctx PageContext) (str
 		if titleDepth > 6 {
 			titleDepth = 6
 		}
-		titleElem := "h" + fmt.Sprintf("%v", titleDepth)
+		titleElem := "h" + strconv.Itoa(titleDepth)
 
 		var titleSize string
 		if titleDepth == 2 {

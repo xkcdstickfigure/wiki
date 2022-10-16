@@ -1,9 +1,9 @@
 package render
 
 import (
-	"fmt"
 	"html"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"alles/wiki/markup"
@@ -32,7 +32,7 @@ func renderTocList(sections []markup.Section, path []string) string {
 		output += `<li>`
 
 		slug := url.QueryEscape(strings.ReplaceAll(strings.ToLower(section.Title), " ", "_"))
-		path2 := append(path, fmt.Sprintf("%v", i+1))
+		path2 := append(path, strconv.Itoa(i+1))
 
 		output += `<span class="text-gray-800">` + strings.Join(path2, ".") + `</span>`
 		output += `<a href="#` + slug + `" class="text-blue-700 hover:underline ml-2">` + html.EscapeString(section.Title) + `</a>`
