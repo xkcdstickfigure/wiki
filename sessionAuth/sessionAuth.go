@@ -40,6 +40,7 @@ func UseSession(db store.Store, w http.ResponseWriter, r *http.Request) (store.S
 		Name:     cookieName,
 		Value:    session.Token,
 		Domain:   env.Domain,
+		Path:     "/",
 		MaxAge:   365 * 24 * 60 * 60,
 		SameSite: http.SameSiteLaxMode,
 	})
