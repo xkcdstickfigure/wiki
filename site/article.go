@@ -1,7 +1,6 @@
 package site
 
 import (
-	"bytes"
 	"html/template"
 	"net/http"
 	"strings"
@@ -29,7 +28,18 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 	// get article
 	article, err := h.db.ArticleGetBySlug(r.Context(), site.Id, slug)
 	if err != nil {
-		h.sendMissingPage(w, r, site)
+		w.WriteHeader(http.StatusNotFound)
+		h.templates.ExecuteTemplate(w, "missing.html", struct {
+			Site          string
+			SiteName      string
+			Origin        string
+			StorageOrigin string
+		}{
+			Site:          site.Name,
+			SiteName:      site.DisplayName,
+			Origin:        env.Origin,
+			StorageOrigin: env.StorageOrigin,
+		})
 		return
 	}
 
@@ -53,24 +63,6 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// render page
-	html := new(bytes.Buffer)
-	h.templates.ExecuteTemplate(html, "article.html", struct {
-		Site          string
-		SiteName      string
-		Origin        string
-		StorageOrigin string
-		Title         string
-		Content       template.HTML
-	}{
-		Site:          site.Name,
-		SiteName:      site.DisplayName,
-		Origin:        env.Origin,
-		StorageOrigin: env.StorageOrigin,
-		Title:         article.Title,
-		Content:       template.HTML(articleHtml),
-	})
-
 	// get session
 	session, err := sessionAuth.UseSession(h.db, w, r)
 	if err != nil {
@@ -88,6 +80,20 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// send page
-	w.Write(html.Bytes())
+	// render page
+	h.templates.ExecuteTemplate(w, "article.html", struct {
+		Site          string
+		SiteName      string
+		Origin        string
+		StorageOrigin string
+		Title         string
+		Content       template.HTML
+	}{
+		Site:          site.Name,
+		SiteName:      site.DisplayName,
+		Origin:        env.Origin,
+		StorageOrigin: env.StorageOrigin,
+		Title:         article.Title,
+		Content:       template.HTML(articleHtml),
+	})
 }
