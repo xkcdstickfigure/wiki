@@ -19,6 +19,11 @@ func NewRouter(db store.Store) chi.Router {
 	r.Get("/auth", h.googleAuth)
 	r.Get("/auth/callback", h.googleCallback)
 
+	// gitea
+	r.Get("/gitea", h.giteaAuth)
+	r.Post("/gitea/token", h.giteaToken)
+	r.Get("/gitea/profile", h.giteaProfile)
+
 	return r
 }
 

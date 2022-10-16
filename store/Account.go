@@ -33,6 +33,13 @@ func (s Store) AccountCreate(ctx context.Context, data Account) (Account, error)
 	return account, err
 }
 
+func (s Store) AccountGet(ctx context.Context, id string) (Account, error) {
+	var account Account
+	err := s.Conn.QueryRow(ctx, "select id, google_id, discord_id, name, email, email_verified, avatar, created_at from account where id=$1", id).
+		Scan(&account.Id, &account.GoogleId, &account.DiscordId, &account.Name, &account.Email, &account.EmailVerified, &account.Avatar, &account.CreatedAt)
+	return account, err
+}
+
 func (s Store) AccountSetDiscord(ctx context.Context, id string, discordId string) error {
 	_, err := s.Conn.Exec(ctx, "update account set discord_id=$2 where id=$1", id, discordId)
 	if err != nil {

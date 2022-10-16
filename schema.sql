@@ -85,3 +85,17 @@ create table article_view (
     article_id   uuid          references article on delete cascade,
     created_at   timestamptz
 );
+
+create table gitea_code (
+    id           uuid          primary key,
+    account_id   uuid          references account on delete cascade,
+    code         text          unique,
+    created_at   timestamptz
+);
+
+create table gitea_token (
+    id           uuid          primary key,
+    account_id   uuid          references account on delete cascade,
+    token        text          unique,
+    created_at   timestamptz
+);
