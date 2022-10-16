@@ -2,8 +2,8 @@ package hub
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -20,7 +20,6 @@ func (h handlers) giteaProfile(w http.ResponseWriter, r *http.Request) {
 	// get account
 	account, err := h.db.AccountGet(r.Context(), token.AccountId)
 	if err != nil {
-		fmt.Println(err)
 		w.WriteHeader(400)
 		return
 	}
@@ -28,31 +27,14 @@ func (h handlers) giteaProfile(w http.ResponseWriter, r *http.Request) {
 	// response
 	w.Header().Set("content-type", "application/json")
 	json.NewEncoder(w).Encode(struct {
-		Active            bool   `json:"active"`
-		AvatarUrl         string `json:"avatar_url"`
-		Created           string `json:"created"`
-		Description       string `json:"description"`
-		Email             string `json:"email"`
-		FollowersCount    int    `json:"followers_count"`
-		FollowingCount    int    `json:"following_count"`
-		FullName          string `json:"full_name"`
-		Id                int    `json:"id"`
-		IsAdmin           bool   `json:"is_admin"`
-		Language          string `json:"language"`
-		LastLogin         string `json:"last_login"`
-		Location          string `json:"location"`
-		Login             string `json:"login"`
-		ProhibitLogin     bool   `json:"prohibit_login"`
-		Restricted        bool   `json:"restricted"`
-		StarredReposCount int    `json:"starred_repos_count"`
-		Visibility        string `json:"visibility"`
-		Website           string `json:"website"`
+		Id     int    `json:"id"`
+		Login  string `json:"login"`
+		Email  string `json:"email"`
+		Active bool   `json:"active"`
 	}{
-		Active:     true,
-		Email:      "user123@glaffle.com",
-		FullName:   account.Name,
-		Id:         123,
-		Login:      "user123",
-		Visibility: "public",
+		Id:     account.Number,
+		Login:  strconv.Itoa(account.Number),
+		Email:  strconv.Itoa(account.Number) + "@glaffle.com",
+		Active: true,
 	})
 }
