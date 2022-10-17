@@ -53,7 +53,7 @@ func (h handlers) article(w http.ResponseWriter, r *http.Request) {
 		Title:         article.Title,
 		Site:          site.Name,
 		Domain:        env.Domain,
-		PageSlug:      article.Slug,
+		Slug:          article.Slug,
 		StorageOrigin: env.StorageOrigin,
 	})
 	if err != nil {

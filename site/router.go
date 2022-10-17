@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"alles/wiki/env"
@@ -31,6 +32,13 @@ func NewRouter(db store.Store) chi.Router {
 
 	// article
 	r.Get("/{slug}", h.article)
+
+	// edit
+	r.Get("/{slug}/edit", func(w http.ResponseWriter, r *http.Request) {
+		slug := strings.ToLower(chi.URLParam(r, "slug"))
+		subdomain := getSubdomain(r)
+		http.Redirect(w, r, "https://source.glaffle.com/glaffle/"+url.QueryEscape(subdomain)+"/src/branch/main/"+url.QueryEscape(slug), http.StatusTemporaryRedirect)
+	})
 
 	return r
 }

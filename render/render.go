@@ -8,7 +8,7 @@ type PageContext struct {
 	Title         string
 	Site          string
 	Domain        string
-	PageSlug      string
+	Slug          string
 	StorageOrigin string
 }
 
