@@ -28,7 +28,8 @@ func UseSession(db store.Store, w http.ResponseWriter, r *http.Request) (store.S
 	}
 
 	// remote address
-	address := r.Header.Get("x-real-ip")
+	address := r.Header.Get("x-forwarded-for")
+	address = strings.TrimSpace(strings.Split(address, ",")[len(strings.Split(address, ","))-1])
 	if address == "" {
 		address = r.RemoteAddr
 	}
