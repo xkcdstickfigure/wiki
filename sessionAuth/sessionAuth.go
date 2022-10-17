@@ -27,9 +27,15 @@ func UseSession(db store.Store, w http.ResponseWriter, r *http.Request) (store.S
 		return session, nil
 	}
 
+	// remote address
+	address := r.Header.Get("x-real-ip")
+	if address == "" {
+		address = r.RemoteAddr
+	}
+
 	// create new session
 	session, err = db.SessionCreate(r.Context(), store.Session{
-		Address:   r.RemoteAddr,
+		Address:   address,
 		UserAgent: r.Header.Get("user-agent"),
 	})
 	if err != nil {
