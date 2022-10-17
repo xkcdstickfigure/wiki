@@ -2,6 +2,7 @@ package sessionAuth
 
 import (
 	"net/http"
+	"strings"
 
 	"alles/wiki/env"
 	"alles/wiki/store"
@@ -44,6 +45,7 @@ func UseSession(db store.Store, w http.ResponseWriter, r *http.Request) (store.S
 		MaxAge:   365 * 24 * 60 * 60,
 		SameSite: http.SameSiteLaxMode,
 		HttpOnly: true,
+		Secure:   strings.Split(env.Origin, ":")[0] == "https",
 	})
 
 	return session, err
