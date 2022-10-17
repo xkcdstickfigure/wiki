@@ -13,7 +13,7 @@ func (h handlers) discordAuth(w http.ResponseWriter, r *http.Request) {
 	value := r.URL.Query().Get("value")
 
 	// get session
-	session, err := sessionAuth.GetSession(h.db, r)
+	session, err := sessionAuth.UseSession(h.db, w, r)
 	if err != nil {
 		w.WriteHeader(400)
 		return
