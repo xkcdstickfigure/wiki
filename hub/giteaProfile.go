@@ -27,14 +27,12 @@ func (h handlers) giteaProfile(w http.ResponseWriter, r *http.Request) {
 	// response
 	w.Header().Set("content-type", "application/json")
 	json.NewEncoder(w).Encode(struct {
-		Id     int    `json:"id"`
-		Login  string `json:"login"`
-		Email  string `json:"email"`
-		Active bool   `json:"active"`
+		Id    int    `json:"id"`
+		Login string `json:"login"`
+		Email string `json:"email"`
 	}{
-		Id:     account.Number,
-		Login:  strconv.Itoa(account.Number),
-		Email:  strconv.Itoa(account.Number) + "@glaffle.com",
-		Active: true,
+		Id:    account.Number,
+		Login: strconv.Itoa(account.Number),
+		Email: strconv.Itoa(account.Number) + "@glaffle.com",
 	})
 }
