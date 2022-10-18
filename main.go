@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -37,5 +38,6 @@ func main() {
 		}
 	})
 
+	fmt.Println("starting http server on :3000")
 	http.ListenAndServe(":3000", nil)
 }
