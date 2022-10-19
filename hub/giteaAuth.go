@@ -32,5 +32,5 @@ func (h handlers) giteaAuth(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// redirect
-	http.Redirect(w, r, env.GiteaCallback+"?code="+code.Code+"&state="+url.QueryEscape(state), http.StatusTemporaryRedirect)
+	http.Redirect(w, r, env.GiteaOrigin+"/user/oauth2/core/callback?code="+code.Code+"&state="+url.QueryEscape(state), http.StatusTemporaryRedirect)
 }
