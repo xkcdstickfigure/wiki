@@ -16,7 +16,6 @@ type File struct {
 	Type     string `json:"type"`
 	Encoding string `json:"encoding"`
 	Content  string `json:"content"`
-	Sha      string `json:"sha"`
 }
 
 func GetArticleSource(site string, slug string) (string, error) {
