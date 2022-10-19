@@ -20,3 +20,5 @@ var GoogleClientId = os.Getenv("GOOGLE_CLIENT_ID")
 var GoogleClientSecret = os.Getenv("GOOGLE_CLIENT_SECRET")
 
 var GiteaOrigin = os.Getenv("GITEA_ORIGIN")
+var GiteaAccess = os.Getenv("GITEA_ACCESS")
+var GiteaToken = os.Getenv("GITEA_TOKEN")
